@@ -1,0 +1,15 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- -%]
+[%# parametres: nom valeur label [msg] -%]
+<div class="form-group [% IF msg %]has-error[% END %] ">
+  <label for="[% nom %]"
+	 class="col-sm-4 control-label">[% label %]&nbsp;:</label>
+  <div class="col-sm-8">
+
+<input type="date" id="[% nom %]"
+	   name="[% nom %]"
+       value="[% valeur | html %]"
+       min="2019-01-01" max="2080-12-31">
+
+    [% IF msg %]<div class="text-danger">[% msg %]</div>[% END %]
+  </div>
+</div>

@@ -1,0 +1,176 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+	
+	<h2> [% titre %] </h2>
+
+	<form name="formulaire_communication" method="post"
+	action="[% uri_base %]/articles/communication/creer"
+	enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-5" id="partgauche">
+			<div>
+<!-- Choix de l'édition de la conférence -->
+				<label for="edition_conf">Édition de la conf pour laquelle vous souhaitez écrire :</label>
+				<p>
+					<select id="" name="article_edition_conf_id">
+						[% FOREACH editConf = liste_editions %]
+                		[% IF editConf.edition_conf_id == article.article_edition_conf_id %]
+                    		<option value="[% article.article_edition_conf_id %]"> [% editConf.edition_conf_nom %] - 
+						date limite : [% editConf.edition_conf_date_limite_soumission.ymd %]</option>
+                		[% END %]
+                		[% END %]
+						<option id="" value=""></option>
+						[% FOREACH editConf = liste_editions  %]
+						<option  value="[% editConf.edition_conf_id %]"> 
+							[% editConf.edition_conf_nom %] - 
+						date limite : [% editConf.edition_conf_date_limite_soumission.ymd %]</option>
+						[% END %]
+					</select>
+				</p>
+<!-- On rentre les dates et les infos -->
+				[%~ INCLUDE champ_date.tt
+				nom="article_date_limite_soumission" valeur="${article.article_date_limite_soumission.ymd}"
+				label="Date de soumission" msg="${msgs.article_date_limite_soumission}" %]
+				<br>
+				<br>
+				[%~ INCLUDE champ.tt
+				nom="article_nom" valeur="${article.article_nom}"
+				label="Titre" msg="${msgs.article_nom}" %]
+				
+				[%~ INCLUDE champ.tt
+				nom="article_resume" valeur="${article.article_resume}"
+				label="Résumé" msg="${msgs.article_resume}" %] 
+				
+				[%~ INCLUDE champ.tt
+				nom="article_mot_cle" valeur="${article.article_mot_cle}"
+				label="Mots clés" msg="${msgs.article_mot_cle}" %] 
+			
+			</div>
+
+		</div>
+		<div class="col-2"></div>
+
+		<div class="col-5", id="partdroite">
+
+
+			<div>
+
+				<label for="statut">Statut : </label>	
+				<p>
+					<select id="statut" name="article_statut_id">
+						[% FOREACH statut = liste_statuts %]
+                		[% IF statut.statut_id == article.article_statut_id %]
+                    		<option value="[% article.article_statut_id %]"> [% statut.statut_description %]</option>
+                		[% END %]
+                		[% END %]
+						<option id="stat" value=""> </option>
+						[% FOREACH statut = liste_statuts %]
+						<option id="stat" value="[% statut.statut_id %]"> [% statut.statut_description %]</option>
+						[% END %]
+					</select>
+				</p>
+<!-- Bloc du online -->
+				<div id="lien_article" style="display:none">
+					[%~ INCLUDE champ.tt
+					nom="article_lien" valeur="${article.article_lien}"
+					label="Lien" msg="${msgs.article_lien}" %] 
+				</div>
+
+				<div id="date_archivage" style="display:none">
+					[%~ INCLUDE champ_date.tt
+					nom="article_date_limite_soumission" valeur="${article.article_date_limite_soumission.ymd}"
+					label="Date choisie de soumission" msg="${msgs.dateLimiteValide}" %] 
+				</div>
+			</div>
+
+			<h3>Choix des auteurs : </h3>
+			<div class="row" id="twoside">
+				<br>
+				<div class="col-sm-5">
+					<select name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
+						[% FOREACH utilisateur = liste_utilisateurs %]
+						<option class="try" value="[% utilisateur.utilisateur_id %]">
+							[% utilisateur.utilisateur_prenom%] [% utilisateur.utilisateur_nom %] 
+						</option>
+						[%END%]
+					</select>
+				</div>
+
+				<div class="col-sm-2">
+					<button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+					<button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+					<button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+					<button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+				</div>
+
+				<div class="col-sm-5">
+					<select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
+					<div class="row">
+						<div class="col-sm-6">
+							<button type="button" id="multiselect_move_up" class="btn btn-block"><i class="glyphicon glyphicon-arrow-up"></i></button>
+						</div>
+						<div class="col-sm-6">
+							<button type="button" id="multiselect_move_down" class="btn btn-block col-sm-6"><i class="glyphicon glyphicon-arrow-down"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="valider">
+		<center>
+			<button class="btn btn-success btn-circle btn-lg" title="Valider" type="submit" value="submit">
+				Valider
+			</button>
+		</center>
+	</div>
+</div>
+
+</form>
+
+
+
+
+
+
+<script>
+ // si le statut est online 
+	document.getElementById("statut").onchange = function() {myFunction()};
+	var statutchoisi;
+	function myFunction(){
+		statutchoisi = document.getElementById("statut").value;
+		if (statutchoisi=="2"){ // 2 --> id du statut "online"
+			document.getElementById("lien_article").style.display="block";
+			document.getElementById("date_archivage").style.display="block";
+		}
+		else if(statutchoisi=="3"){ // 3 --> id du statut "publié"
+			document.getElementById("date_archivage").style.display="block";
+			document.getElementById("lien_article").style.display="none";
+		}
+		else{
+			document.getElementById("date_archivage").style.display="none";
+			document.getElementById("lien_article").style.display="none";
+		}
+	}
+
+
+</script>
+
+<!-- Gestion du multiselect two sides -->
+<script type="text/javascript" src="[% uri_base %]/multi/dist/js/multiselect.min.js"></script>
+<script type="text/javascript">
+
+	jQuery(document).ready(function($) {
+		$('#multiselect').multiselect();
+	});
+</script>
+
+</reste>
+
+
+

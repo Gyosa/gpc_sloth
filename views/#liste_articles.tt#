@@ -1,0 +1,93 @@
+>
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<!-- CSS liste -->
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+
+<reste class="col-10">
+  <div id="reste">
+    <div class="col-10"> <h2> Catalogue des articles </h2> </div>
+    <div class="col-2">
+      <button onclick="popup()" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout">
+	Ajouter un article
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-4">
+	<div  id="petittexte"> Rechercher dans le titre </div>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
+
+	<div id="petittexte"> Rechercher dans auteur/groupe </div>
+	<input class="form-control" id="myInput" type="text" placeholder="Search..">
+	<div>
+	  A publier/publié dans 
+          <input type="checkbox" id="check" name="conf">
+          <label for="dejaecrit"> Conférence </label>
+	  <input type="checkbox" id="check" name="revue">
+          <label for="dejaecrit"> Revue </label>
+	</div>
+      </div>
+      <div class="col-2"> </div>
+      <div class="col-6">
+	<div id="petittexte"> Options de recherche
+	</div>
+	
+	<div>
+          <input type="checkbox" id="check" name="mesarticles">
+          <label for="dejaecrit"> Afficher seulement mes articles </label>
+	</div>
+	<div>
+          <input type="checkbox" id="check" value="encours">
+	  <label for="horsserie"> Afficher seulement les articles en cours de rédaction </label>
+	</div>
+	<div>
+          <input type="checkbox" id="check" value="acceptes">
+	  <label for="articleencours">Afficher seulement les articles acceptés </label>
+	</div>
+	<div>
+          <input type="checkbox" id="check" value="refuses">
+	  <label for="articleencours">Afficher seulement les articles refusés </label>
+	</div> 
+      </div>
+      <div class="col-12" id="petittexte"> Cliquer sur une revue pour avoir plus d'informations </div>
+      [% FOREACH article = articles %]
+      
+      <a class="row" id="revue" href="[% uri_base %]/articles/afficher/[% article.article_id | uri%]" >
+	
+	<div class="col-9" id = "nom"> [% article.article_nom | html %] </div> 
+      </a>    
+      [% END %]  
+    </div>
+  </div>
+</div>
+
+  
+
+  <div id="mess" style="display:none; top:100px; 
+    left:100px; 
+    width:400px;
+    height:150px; background-color:#36622B; margin-left:300px; margin-top:150px; text-align:center; margin-bottom:50%">
+   <h3> Souhaitez-vous publier pour : </h3>
+    <button type="button" onclick="gocreerpubli();">Revue</button>&nbsp;
+    <button type="button" onclick="gocreercom();">Conférence</button>
+  </div>
+
+</reste>
+
+<script>
+  function popup()
+  {
+  document.getElementById("mess").style.display = "block";
+  document.getElementById("reste").style.display = "none";
+  }
+  
+  function gocreerpubli()
+  {
+  document.location.href="[% uri_base %]/publication/creer";
+  }
+  function gocreercom(){
+  document.location.href="[% uri_base %]/communication/creer";
+  }
+  
+</script>
+<!-- voir documentation sur <http://datatables.net/manual/index> -->

@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+  
+  <div class="col-10"> <h2> [% titre %] pour [% hors_serie_revue.revue_nom %] </h2> </div>
+  
+  <div class="row" id="titre"> 
+
+    <div class="col-5" id="nom">
+
+      <form name="formulaire_hors_serie"
+            class="form-horizontal"
+            method="post"
+            [% IF hors_serie.hors_serie_id ~%]
+            action="[% uri_base %]/[% hors_serie_revue_id %]/hors_serie/modifier/[% hors_serie.hors_serie_id %]"
+            [%~ ELSE ~%]
+            action="[% uri_base %]/[% hors_serie_revue_id %]/hors_serie/creer"
+            [%~ END %]
+            enctype="multipart/form-data">
+
+        [%~ INCLUDE champ.tt
+        nom="hors_serie_nom" valeur="${hors_serie.hors_serie_nom}"
+        label="Nom du hors-série" msg="${msgs.hors_serie_nom}" %]
+
+        [%~ INCLUDE champ.tt
+        nom="hors_serie_consignes" valeur="${hors_serie.hors_serie_consignes}"
+        label="Consignes" msg="${msgs.hors_serie_consignes}" %] 
+
+        [%~ INCLUDE champ_date.tt
+        nom="hors_serie_date_limite_soumission" valeur="${hors_serie.hors_serie_date_limite_soumission.ymd}"
+        label="Date limite de soumission" msg="${msgs.hors_serie_date_limite_soumission}" %] 
+
+        [%~ INCLUDE champ_date.tt
+        nom="hors_serie_date_publication" valeur="${hors_serie.hors_serie_date_publication.ymd}"
+        label="Date de publication" msg="${msgs.hors_serie_date_publication}" %] 
+<!-- si existant modification sinon création -->
+        <button class="btn btn-success" type="submit">
+          [% IF hors_serie.hors_serie_id ~%]
+          Valider la modification
+          [%~ ELSE ~%]
+          Valider la création
+          [%~ END %]
+        </button>
+        
+	</div> 
+
+</form>
+      
+</div>
+</div>
+</reste>    
+  
+    

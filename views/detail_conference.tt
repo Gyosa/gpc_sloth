@@ -1,0 +1,55 @@
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+  <div class="row" style="margin-bottom:50px">
+    <div class="col-8">
+      <h2> [% conference.conference_nom  %] </h2> 
+    </div>
+    <div class="col-4"> 
+      <!-- Boutons suppression et modification -->
+          <a href="[% uri_base %]/conferences/modifier/[% conference.conference_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien"> Modifier</a> 
+          <a href="[% uri_base %]/conferences/supprimer/[% conference.conference_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette conférence ?')"> Supprimer
+         </a> 
+    </div>     
+  </div>
+
+  <div class="row">
+
+    <!-- Affichage des informations de la conférence si elles existent -->
+    <div class="col-5">
+        [% IF conference.conference_site_web %]
+          <a id="lienjournal" style="color:white" href="[% conference.conference_site_web %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_modif" > Site web </a>
+        [% ELSE %]
+          <div id="lienjournal"> Site Web manquant </div>
+        [% END %]
+        <div id="descriptionjournal"> [% IF conference.conference_description %][% conference.conference_description %] [% ELSE %] Description manquante [% END %]</div>
+        <div id="consignes"> 
+          [% IF conference.conference_consigne %]
+          <a class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout" href="[% conference.conference_consignes %]"> Consignes </a>
+          [% ELSE %] <h3> Consignes manquantes</h3>
+          [% END %]
+        </div> 
+    </div>
+    <div class="col-1"> </div>
+    <div class="col-6">
+      <div id="titrelisteedition"> 
+         Editions de cette conférence
+      
+      <a href="[% uri_base %]/[% conference.conference_id %]/edition_conf/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_ajout_edition">
+	      Ajouter une édition
+      </a> </div>
+      <div class="col-6" id="listearticles">
+      [% FOREACH edition = editions %]
+      <a class="row" id="editconference" href="[% uri_base %]/[% conference.conference_id %]/edition_conf/afficher/[% edition.edition_conf_id %]">
+	    <div id="nom"> [% edition.edition_conf_nom %] </div>
+      </a>
+      [% END %]
+    </div>
+  </div>
+  
+ 
+
+
+</reste>
+

@@ -1,0 +1,25 @@
+@font-face {
+	font-family: 'patuaone';
+	src: url('polices/PatuaOne-Regular.ttf')format('truetype');
+}
+
+
+
+h1{
+    margin-top:1.5%;
+}
+
+
+
+
+
+
+#gp{
+    background-color:#36622B;
+    height:30px;
+    color:white;
+    vertical-align:center;
+    margin-top:3%;
+    margin-left:2%;
+}
+

@@ -1,0 +1,12 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+[% IF messages.size > 0 %]
+<div>
+[% FOREACH message = messages %]
+[% IF message.classe != "debug" %]
+  <pre class="message text-[% message.classe %] bg-[% message.classe %]" role="alert">
+  <em style="color:white; height:30px"> [%- message.texte | html -%] </em>
+  </pre>
+[% END %]
+[% END %]
+</div>
+[% END %]

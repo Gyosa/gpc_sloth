@@ -1,0 +1,24 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<header>
+  <nav class="navbar navbar-fixed-top" style="background-color:#36622D">
+
+    <div class="col-1" id="logo"> 
+      <a href='[% uri_base %]/dashboard'> 
+        <img src="[% uri_base %]/images/logo.png" alt='paresseux' style="margin-left:33px;" >  <!--Logo-->
+      </a>
+    </div>
+    <div class="col-10 " id ="SLOTH"> 
+      <h1> SLOTH </h1> <!--Titre-->
+    </div>
+    <div class="col-1" id="user">
+       [% user_nom %]<br/>[% user_prenom %] <!--username-->
+    </div> 
+
+
+  </nav>          
+
+</header>
+
+
+

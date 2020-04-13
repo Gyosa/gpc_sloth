@@ -1,0 +1,31 @@
+body {
+  font-family:  "Source Sans Pro",Verdana,"Bitstream Vera", Helvetica,"Droid Sans",sans-serif;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+}
+
+table .btn {
+  padding: 3px 8px;
+}
+
+.enligne {
+  display: inline-block;
+}
+
+#footer {
+    margin-top: 30px;
+    background-color: #f8f8f8;
+    padding: 1em 0;
+    color: #888;
+    margin-bottom: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.message {
+  padding: .5em;
+  font-size: .9em;
+}

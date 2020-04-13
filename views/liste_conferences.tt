@@ -1,0 +1,61 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<!-- CSS liste -->
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+<style> #myUL {
+    list-style-type: none;
+    width:100%;
+  }
+</style>
+<reste class="col-10" id="reste">
+ <!-- Titre, bouton ajouter et filtre --> 
+  <div class="col-10"> <h2> Conférences scientifiques </h2> </div>
+  <div class="col-2">   
+    <a href="[% uri_base %]/conferences/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout"> Ajouter une conférence</a> </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div  id="petittexte"> Rechercher dans le titre </div>
+                       <input class="form-control" id="myInput" onkeyup="myFunction()" type="text" placeholder="Search..">
+                    </div>
+                    <div class="col-12" id="petittexte"> Cliquer sur une revue pour avoir plus d'informations </div>
+<!--Liste des conférences-->		    <ul id="myUL">
+		    [% FOREACH conf = conferences %] <!-- Conférence contient 3 objets, la liste des conférences, le nombre d'éditions par conférences et le nombre d'éditions n'ayant pas encore eu lieu -->
+		    
+		   <li> 
+        <a href="[% uri_base %]/conferences/afficher/[% conf.0.conference_id | uri%]" >
+          <div id="revue" style="height:50px">
+          <div class="row">
+		        <div class="col-6" id = "nom"> [% conf.0.conference_nom | html %] </div>
+		        <div class="col-6">Nombre d'éditions enregistrées : [% conf.1 %]</div>
+          </div>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">Nombre d'éditions à venir : [% conf.2 %]</div>
+          </div>
+        </div>
+        </a> 
+      </li>
+	       	    [% END %]
+		    </ul>
+		    
+		    
+<script>
+  function myFunction() { //Filtre rechercher 
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) { // On parcourt la liste des conférences 
+		  a = li[i].getElementsByTagName("a")[0];
+		  txtValue = a.textContent || a.innerText;
+		  if (txtValue.toUpperCase().indexOf(filter) > -1) { // On compare l'input avec les infos des conférences
+    li[i].style.display = "";
+    } else {
+    li[i].style.display = "none";
+    }
+    }
+}
+  </script>
+   </reste>
+<!-- voir documentation sur <http://datatables.net/manual/index> -->

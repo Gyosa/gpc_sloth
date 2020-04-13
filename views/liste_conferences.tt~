@@ -1,0 +1,64 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+
+
+<!-- [% IF critere_utilisateur_nom.defined or critere_utilisateur_prenom.defined %]
+<div class="alert alert-warning">
+  [% IF critere_utilisateur_nom.defined %]
+  Nom contenant '[% critere_utilisateur_nom | html %]' &mdash;
+  [% END %]
+  [% IF critere_utilisateur_prenom.defined %]
+  Code postal est [% critere_utilisateur_prenom | html %] &mdash;
+  [% END %]
+  [% INCLUDE button_get.tt
+  action="${uri_base}/Utilisateur/liste"
+  texte="Supprimer filtre"
+  glyphicon="remove-circle" %]
+</div>
+[% END %] -->
+
+<!-- CSS liste -->
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste_revues.css"/>
+
+<reste class="col-10">
+  
+                <div class="col-10"> <h2> Catalogue des revues scientifiques </h2>
+                <div class="row">
+                    <div class="col-5">
+                        <div  id="petittexte"> Rechercher dans le titre </div>
+                       <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                        <div id="petittexte"> Rechercher dans la langue </div>
+                        <input class="form-control" id="myInput" type="text" placeholder="Search.."> 
+                    </div>
+                    <div class="col-7">
+                      <div id="petittexte"> Options de recherche </div>
+		      
+                        <div>
+                            <input type="checkbox" id="check" name="dejaecrit">
+                            <label for="dejaecrit"> Afficher les revues pour lesquelles j'ai déjà écrit </label>
+                        </div>
+                        <div>
+                              <input type="checkbox" id="check" value="horsserie">
+			      <label for="horsserie"> Afficher les revues publiant bientôt un hors-série </label>
+                        </div>
+                        <div>
+                              <input type="checkbox" id="check" value="articleencours">
+			      <label for="articleencours">Afficher les revues pour lesquelles un article est en cours
+                            </label>
+                        </div> 
+                    </div>
+                    <div class="col-12" id="petittexte"> Cliquer sur une revue pour avoir plus d'informations </div>
+		    [% FOREACH revue = revues %]
+		    
+		    <a class="row" id="revue" href="[% uri_base %]/journaux/afficher/[% revue.journal_id | uri%]" >
+		   
+		      <div class="col-9" id = "nom"> [% revue.journal_nom | html %] </div> 
+                      <div class="col-3" id="commentaire"> Nombre articles publiés </div >
+		      </a>
+		   
+
+    
+   
+	       	[% END %]
+   </reste>
+<!-- voir documentation sur <http://datatables.net/manual/index> -->

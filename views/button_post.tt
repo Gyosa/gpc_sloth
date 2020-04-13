@@ -1,0 +1,4 @@
+[%# -*- coding: utf-8; mode: html; -*- ~%]
+<form class="enligne" action="[% url %]" method="post">
+  <button class="btn btn-primary" type="submit">[% texte | html %]</button>
+</form>

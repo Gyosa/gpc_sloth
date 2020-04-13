@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+
+  <div class="col-10"> <h2> [% titre %] </h2> </div>
+  
+  <div class="row" id="titre"> 
+
+    <div class="col-5" id="nom">
+
+      <form name="formulaire_edition_conf"
+      class="form-horizontal"
+      method="post"
+      [% IF edition_conf.edition_conf_id ~%]
+      action="[% uri_base %]/[% edition_conf_conference_id %]/edition_conf/modifier/[% edition_conf.edition_conf_id %]"
+      [%~ ELSE ~%]
+      action="[% uri_base %]/[% edition_conf_conference_id %]/edition_conf/creer"
+      [%~ END %]
+      enctype="multipart/form-data">
+<!-- On rentre les infos dans les inputs -->
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_nom" valeur="${edition_conf.edition_conf_nom}"
+      label="Nom de l'édition" msg="${msgs.edition_conf_nom}" %]
+
+      [%~ INCLUDE champ.tt 
+      nom="edition_conf_description" valeur="${edition_conf.edition_conf_description}"
+      label="Description" msg="${msgs.edition_conf_description}" %] 
+
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_ville" valeur="${edition_conf.edition_conf_ville}"
+      label="Ville d'accueil" msg="${msgs.edition_conf_ville}" %] 
+
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_consignes" valeur="${edition_conf.edition_conf_consignes}"
+      label="Consignes" msg="${msgs.edition_conf_consignes}" %] 
+
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_langue" valeur="${edition_conf.edition_conf_langue}"
+      label="Langue de la conférence" msg="${msgs.edition_conf_langue}" %] 
+
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_pays" valeur="${edition_conf.edition_conf_pays}"
+      label="Pays d'accueil" msg="${msgs.edition_conf_pays}" %] 
+
+      [%~ INCLUDE champ.tt
+      nom="edition_conf_site" valeur="${edition_conf.edition_conf_site}"
+      label="Site web" msg="${msgs.edition_conf_site}" %] 
+
+
+      [%~ INCLUDE champ_date.tt
+      nom="edition_conf_date_limite_soumission" valeur="${edition_conf.edition_conf_date_limite_soumission.ymd}"
+      label="Date limite de soumission" msg="${msgs.edition_conf_date_limite_soumission}" %] 
+
+      [%~ INCLUDE champ_date.tt
+      nom="edition_conf_date_debut" valeur="${edition_conf.edition_conf_date_debut.ymd}"
+      label="Date de début" msg="${msgs.edition_conf_date_debut}" %] 
+
+      [%~ INCLUDE champ_date.tt
+      nom="edition_conf_date_fin" valeur="${edition_conf.edition_conf_date_fin.ymd}"
+      label="Date de fin" msg="${msgs.edition_conf_date_fin}" %] 
+
+
+<!-- Si l'édition existe, on modifie les infos, sinon on la créée -->
+      <button class="btn btn-success" type="submit">
+          [% IF edition_conf.edition_conf_id ~%]
+          Valider la modification
+          [%~ ELSE ~%]
+          Valider la création
+          [%~ END %]
+      </button>
+
+  </div> 
+
+</form>
+
+</div>
+</div>
+</reste>    
+

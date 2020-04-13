@@ -1,0 +1,18 @@
+
+
+
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<p>Application de démonstration pour l'option GSI, version 2016/2017</p>
+
+<p>Quelques éléments de documentation&nbsp;:</p>
+
+<ul>
+  <li>Pour <a href="http://search.cpan.org/~cromedome/Dancer2-0.204001/lib/Dancer2.pm">Dancer2</a>.</li>
+
+  <li>Pour <a href="http://template-toolkit.org/docs/manual/index.html">Template::Toolkit</a>.</li>
+
+  <li>Pour <a href="http://getbootstrap.com/getting-started/">Bootstrap</a>.</li>
+
+  
+</ul>

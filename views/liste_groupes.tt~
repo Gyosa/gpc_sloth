@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap 4 Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+         <link rel="stylesheet" href="stylegroupe.css"/>
+        <title> Les groupes </title>
+        
+    </head>
+    <body>
+        <header>
+                <div class="row">
+                    <div class="col-2" id="logo"> <img src='images/logo.png' alt='paresseux' > </img> </div>
+                    <div class="col-8 "> <h1> SLOTH </h1> </div>
+                    <div class="col-2" id="user"> <img src='images/person.png' alt='people'> </img > Username </div>
+                 
+                <div>
+        </header>
+        <div class="row">
+            <aside class="col-2"> 
+                <a href='tableaudebord.html'> Tableau de Bord </a> <br>
+                <a href='mespub.html'> Mes Publications </a> <br>
+                <a href='catalogueart.html'> Catalogue Articles</a> <br>
+                <a href='cataloguejournal.html'> Catalogue Revues </a> <br>
+                <a href='catalogueconf.html'> Catalogue Conférences </a> <br>
+                <a href='groupes.html'> Groupes </a> <br>
+            </aside>
+            <reste class="col-10">
+                <div class="col-10"> <h2> Les groupes </h2> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 1 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 2 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 3 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 4 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 5 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 6 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 7 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 8 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 9 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+                <div class="row" id="gp"> <div class="col-3" id="nom"> Nom Groupe 10 </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+            </reste>
+        </div>
+    </body>
+      

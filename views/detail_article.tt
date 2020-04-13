@@ -1,0 +1,119 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" >
+	<div class="row">
+		<!-- On affiche les infos de l'article, avec test pour s'assurer que la valeur existe  -->
+		<div class="col-8" style="margin-bottom:5%">
+			<h2> [% IF article.0.article_nom %]Titre de l'article: [% article.0.article_nom %] [% ELSE %] Titre manquant [% END %] </h2>
+			<h3>Écrit pour [% IF article.1 == 3 %] [% IF article.2.0.revue_nom %] <em>[% article.2.0.revue_nom %]</em> [% ELSE %] <em> Nom revue manquant</em>, [% END %]
+				[% ELSIF article.1 == 1 %] [% IF article.2.0.edition_conf_nom %] <em>[% article.2.0.edition_conf_nom %]</em> [% ELSE %] <em>Nom conférence manquant</em>, [% END %]
+				[% ELSIF article.1 == 2 %] [% IF article.2.0.hors_serie_nom %] <em>[% article.2.0.hors_serie_nom %]</em> [% ELSE %] <em>Nom hors-série manquant</em> [% END %]
+				[% END %]
+				<br>
+				Date limite de soumission le 
+				[% USE date(format = '%A %d %B %Y', locale = 'fr_FR') %]
+				[% IF article.0.article_date_limite_soumission %]
+				<em>[% date.format(article.0.article_date_limite_soumission) %]</em>
+				[% ELSE %]
+				<em>date manquante</em>
+				[% END %]
+			</h3>
+		</div>
+		<div class="col-4" id="btn" style="margin-bottom:5%">
+
+			<!-- On test en fonction de si c'est une publication ou une publication -->
+			[% IF article.1 == 1 %]
+			<a href="[% uri_base %]/articles/communication/modifier/[% article.0.article_id %]" id="btn_modif" class="btn btn-success btn-circle btn-lg" role="button" title="Lien">
+				Modifier
+			</a>
+			[% ELSE %]
+			<a href="[% uri_base %]/articles/publication/modifier/[% article.0.article_id %]" class="btn btn-success btn-circle btn-lg" id="btn_modif" style="margin-top:20%;" role="button" title="Lien" >
+				Modifier
+			</a>
+			[% END %]
+			<a href="[% uri_base %]/articles/supprimer/[% article.0.article_id %]" class="btn btn-success btn-circle btn-lg" role="button" style="margin-top:20%;" id="btn_modif" title="Lien" style="margin-top:20%" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cet article ?')">
+				Supprimer
+			</a>
+		</div>
+	</div>
+	<div>
+		<div class="row">
+			<div class="col-6">
+				<!-- Liste des auteurs cités dans l'article -->
+				<div id="listeauteur">
+					Auteurs :
+				</div>
+				<p>
+					[% IF article.4.size!=0 %]
+					[% FOREACH auteur = article.4 %]
+					[% auteur.utilisateur_nom %] [% auteur.utilisateur_prenom %]<br>
+					[% END %]
+					[% ELSE %]
+					Aucun auteur cité
+					[% END %]
+				</p>
+			</div>
+
+			<div class="col-6">
+				<!-- Liste des fichiers attachés à l'article -->
+				<div id="ancienneversion">
+					Fichiers attachés
+				</div>
+				<div>
+					<p>Cliquez sur un document pour avoir un aperçu</p>
+				</div>	
+				<div id="fich">
+
+					[%IF fichiers.0==0%]  <!-- Si il n'a pas de fichier-->
+					<p>Aucun fichier n'a été déposé</p>	
+					[%ELSE%]
+					<ul id="myUL">
+
+
+			<!-- L'instance fichiers est de la forme (nbdefichier,\@listefichier)
+				avec \listefichier de la forme (fichier,nombre de version, \liste_version) -->
+
+				[%FOREACH file = fichiers.1%]
+				<li>
+
+					<div class="row fichier_li ">
+
+
+
+						<div class="col-4"><a title="[%file.0.fichier_commentaire%]" class="file" href="[% uri_base %]/fichiers/lire/[%file.0.fichier_id%]">[%file.0.fichier_nom%]</a></div>
+						<div class="dropdown col-6">
+							<button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Versions
+							</button>
+							<ul class="dropdown-menu">
+								[%IF file.1==0%]
+								<li>Aucune autre version</li>
+								
+								[%ELSE%]
+
+
+								[%FOREACH vers = file.2 %]
+								<!-- On remplit le menu déroulant avec des liens vers les anciennes versions du document -->
+								<li><a href="[% uri_base %]/fichiers/lireversion/[%vers.version_id%]">[%vers.version_nb%] datant du [%vers.version_date.ymd%]</a></li>
+								[%END%]
+								[%END%]
+							</ul>
+						</div> 
+						<!-- Suppression de l'article et donc de toutes ces versions  -->
+						<div  class="col-2"><a class="file" href="[% uri_base %]/fichiers/supprimer/[%file.0.fichier_id%]" onclick="return confirm('Voulez-vous vraiment supprimer ce fichier et toutes ces versions ?')"><span class="glyphicon glyphicon-trash"></span></a></div>
+
+
+					</div>
+				</li>
+				[%END%]
+			</ul>
+
+			[%END%]
+			<a  href="[% uri_base %]/fichiers/upload/[% article.0.article_id %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_import">
+				Importer un document
+			</a>
+		</div>
+	</div> 
+</div>
+</reste>

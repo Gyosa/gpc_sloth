@@ -1,0 +1,273 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+
+<reste class="col-11" id="reste">
+
+    <form name="formulaire_publication" method="post"
+
+    action=" [%IF this_article.2 == 1%]  [% uri_base %]/articles/communication/modifier/[%this_article.0.article_id%]  [%ELSE%] [% uri_base %]/articles/publication/modifier/[%this_article.0.article_id%]  [%END%]"
+    enctype="multipart/form-data">
+
+    <div class="col-11"> <h2> Modifier l'article : [%this_article.0.article_nom%] </h2> 
+    </div>
+    <div class='row'>
+        <div class="col-5" id="partgauche">
+
+            <p>
+
+                [%IF this_article.2 == 1%]
+                <div id="siconf">
+                    <label for="edition_conf">Édition de la conf pour laquelle vous souhaitez écrire :</label>
+                    <p>
+                        [% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %]
+
+                        <select id="" name="" disabled="disabled">
+                            <option id="" value="[%this_article.3.0.edition_conf_id%]">[%this_article.3.0.edition_conf_nom%] / date limite : [% date.format(this_article.3.0.edition_conf_date_limite_soumission)%]</option>
+
+                            [% FOREACH editConf = liste_editions  %]
+                            <option  value="[% editConf.edition_conf_id %]"> 
+                                [% editConf.conference_nom %] - 
+                            date limite : [% date.format(editConf.edition_conf_date_limite_soumission) %]</option>
+                            [% END %]
+                        </select>
+
+                        <input id="prodId" name="article_edition_conf_id" type="hidden" value="[%this_article.3.0.edition_conf_id%]">
+
+                    </p>
+
+
+                </div>
+
+
+
+                [%ELSIF this_article.2 == 3%]
+                <div id="sirevue">
+                    <label for="revue">Revue dans laquelle vous souhaitez publier :</label><br/>
+
+                    <p> <select id="revue_choice" name="article_revue_id" disabled="disabled">
+                        <option value="[%this_article.3.0.revue_id%]">[%this_article.3.0.revue_nom%]</option>
+
+                        [% FOREACH revue = liste_revues_hs %]
+                        <option value="[% revue.0.revue_id %]"> [% revue.0.revue_nom %]</option>
+
+                        [% END %]
+                    </select> </p>
+                    <input id="prodId" name="article_revue_id" type="hidden" value="[%this_article.3.0.revue_id%]">
+
+                </div>
+                
+
+
+                [%ELSE%]
+                <label for="revue">Revue dans laquelle vous souhaitez publier :</label><br/>
+
+
+                <p> <select id="revue_choice" name="article_revue_id" disabled="disabled">
+                    <!-- Valeur par défaut -->
+                    <option value="[%this_article.3.1.revue_id%]">[%this_article.3.1.revue_nom%]</option>
+
+                    [% FOREACH revue = liste_revues_hs %]
+                    <option value="[% revue.0.revue_id %]"> [% revue.0.revue_nom %]</option>
+
+                    [% END %]
+                </select> </p>
+                <input id="" name="article_revue_id" type="hidden" value="[% revue.0.revue_id %]">
+
+
+                <span id="[% revue.0.revue_id %]">
+                    <label for="hors_serie">Hors série pour lequel vous souhaitez écrire :</label><br/>
+
+
+                    <p> <select id="" name="article_hors_serie_id">
+                        <!-- Valeur par par défaut -->
+                        <option value="[%this_article.3.0.hors_serie_id%]">[%this_article.3.0.hors_serie_nom%] / limite : [%this_article.3.0.hors_serie_date_limite_soumission.ymd%] </option>
+
+                        <option value=""> </option>
+                        [% FOREACH hors_serie = revue.2  %]
+
+                        <option  value="[% hors_serie.hors_serie_id %]"> [% hors_serie.hors_serie_nom %] / limite : [% hors_serie.hors_serie_date_limite_soumission.ymd %] </option>
+                        [% END %]
+                    </select> </p>
+                </span>
+
+                
+
+
+                [%END%]
+
+                <!-- A modifier une fois la bdd mise à jour -->
+
+
+
+                [% INCLUDE champ_date.tt
+                nom="article_date_limite_soumission" valeur="$this_article.0.article_date_limite_soumission.ymd"
+                label="Date de soumission" msg="${msgs.article_date_limite_soumission}" %] <br> <br>
+
+                <label for="revue">Titre :</label><br/>
+                <input name="article_nom" style="width:400px" value="[%this_article.0.article_nom%]"> <br/>
+
+                <label for="article_resume" name="article_resume" value="this_article.0.article_mot_cle" >Résumé :</label><br/>
+                <input style="width:400px"> <br/>
+
+                <label for="article_mot_cle" name="article_mot_cle" value="[%this_article.0.article_mon_cle%]">Mots clés :</label><br/>
+                <input style="width:400px">
+
+
+            </div>
+
+            <div class="col-2"></div>
+
+            <div class="col-5" id="partdroite">
+                <label for="statut">Statut : </label>   
+
+                <p> <select id="statut" name="article_statut_id">
+                    <option id="stat" value=""> A mettre à jour</option>
+                    [% FOREACH statut = liste_statut %]
+
+                    <option id="stat" value="[% statut.statut_id %]"> [% statut.statut_description%]</option>
+
+
+                    [% END %]
+                </select></p>
+
+                <div id="lien_article" style="display:none">
+                    [%~ INCLUDE champ.tt
+                    nom="article_lien" valeur="${this_article.0.article_lien}"
+                    label="Lien" msg="${msgs.article_lien}" %] 
+                </div>
+                <div id="date_archivage" style="display:none">
+                    [%~ INCLUDE champ_date.tt
+                    nom="article_date_archivage" valeur="${this_article.0.article_archivage}"
+                    label="Date_archivage" msg="${msgs.article_date_archivage.ymd}" %] 
+                </div> <br>
+
+
+                <h3>Choix des auteurs : </h3>
+
+                <div class="row" id="twoside">
+                    <br>
+                    <div class="col-sm-5">
+                        <select name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
+
+                            [% FOREACH utilisateur = liste_utilisateurs %]
+                            <option class="try" value="[% utilisateur.utilisateur_id %]">[% utilisateur.utilisateur_prenom%] [% utilisateur.utilisateur_nom %] </option>
+                            [%END%]
+                        </select>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                        <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                        <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                        <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple">
+                            [%FOREACH membre = this_article.1%]
+                            <option value="[% membre.utilisateur_id %]">[% membre.utilisateur_prenom %] [% membre.utilisateur_nom %]</option>
+                            [%END%]
+
+
+
+
+                        </select>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" id="multiselect_move_up" class="btn btn-block"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" id="multiselect_move_down" class="btn btn-block col-sm-6"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="valider">
+                   <center> <button class="btn btn-success btn-circle btn-lg" 
+                    title="Valider" type="submit">
+                    Valider
+                </button></center></div>
+
+
+
+
+
+
+            </div>  
+
+        </div>
+
+
+
+    </form>
+
+
+    <script type="text/javascript">
+     document.getElementById("revue_choice").onchange = function() {hs()};
+     var rv,others,i; 
+     function hs(){
+
+
+         rv = document.getElementById("revue_choice").value;
+
+         others=document.getElementById("partgauche");
+         spans=others.getElementsByTagName('span');
+         for (i = 0; i < spans.length; i++) {
+
+            if(spans[i].id==rv){
+                document.getElementById(spans[i].id).style.display="";
+
+            }
+
+            else{
+                document.getElementById(spans[i].id).style.display="none";
+
+            }
+
+        }
+    }
+
+
+
+
+
+    document.getElementById("statut").onchange = function() {myFunction()};
+    var statutchoisi;
+    function myFunction(){
+        statutchoisi = document.getElementById("statut").value;
+        if (statutchoisi=="2"){
+            document.getElementById("lien_article").style.display="block";
+            document.getElementById("date_archivage").style.display="";
+        }
+        else if(statutchoisi=="3"){
+            document.getElementById("date_archivage").style.display="block";
+            document.getElementById("lien_article").style.display="none";
+        }
+        else{
+            document.getElementById("date_archivage").style.display="none";
+            document.getElementById("lien_article").style.display="none";
+        }
+    }
+
+
+
+</script> 
+
+
+
+
+<script type="text/javascript" src="[% uri_base %]/multi/dist/js/multiselect.min.js"></script>
+
+
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+      $('#multiselect').multiselect();
+  });
+</script>
+
+
+</reste>

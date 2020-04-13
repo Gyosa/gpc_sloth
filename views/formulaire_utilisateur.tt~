@@ -1,0 +1,41 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- %]
+<form name="formulaire_utilisateur"
+      class="form-horizontal"
+      method="post"
+      [% IF utilisateur.cli_numero ~%]
+      action="[% uri_base %]/utilisateur/modifier/[% utilisateur.utilisateur_id %]"
+      [%~ ELSE ~%]
+      action="[% uri_base %]/utilisateur/creer"
+      [%~ END %]
+      enctype="multipart/form-data">
+
+  <legend>Fiche d'identité du utilisateur</legend>
+  
+  [%~ INCLUDE champ.tt
+  nom="utilisateur_nom" valeur="${utilisateur.utilisateur_nom}"
+  label="Nom" msg="${msgs.utilisateur_nom}" %] 
+  
+  [%~ INCLUDE champ.tt
+  nom="utilisateur_prenom" valeur="${utilisateur.utilisateur_prenom}"
+  label="Prénom" msg="${msgs.utilisateur_prenom}" %] 
+  
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button class="btn btn-primary" type="submit">
+	[% IF utilisateur.utilisateur_id ~%]
+	Valider les modifications
+	[% ELSE %]
+	Valider la création
+	[% END %]
+      </button>
+      <a class="btn btn-default"
+	 href="[% uri_base %]/utilisateur/liste"
+	 role="button">Revenir à la liste des utilisateurs</a>
+      <button class="btn btn-default pull-right"
+	      type="reset">RÀZ</button>
+    </div>
+  </div>
+  <input type="hidden" name="utilisateur_id" value="[% utilisateur.utilisateur_id %]" />
+  
+</form>

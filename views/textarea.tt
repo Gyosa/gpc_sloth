@@ -1,0 +1,13 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- -%]
+[%# parametres: nom valeur label [msd] -%]
+<div class="form-group">
+  <label for="[% nom %]"
+	 class="col-sm-2 control-label">[% label %]&nbsp;:</label>
+  <div class="col-sm-10">
+    <textarea id="[% nom %]"
+	      class="form-control"
+	      rows="6"
+	      name="[% nom %]">[% valeur | html %]</textarea>
+    [% IF msg %]<span class="erreur">[% msg %]</span>[% END %]
+  </div>
+</div>

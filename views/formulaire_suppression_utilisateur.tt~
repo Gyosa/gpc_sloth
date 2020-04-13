@@ -1,0 +1,43 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- %]
+<fieldset>
+  <legend>Fiche d'identité du client</legend>  
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Nom&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_nom">[% client.cli_nom | html %]</span></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Prénom&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_nom">[% client.cli_prenom | html %]</span></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Adresse&nbsp;:</div>
+      <div class="col-sm-9"><div class="cli_nom">[% client.cli_adresse | html | html_line_break %]</div></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Code Postal&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_cp">[% client.cli_cp | html %]</span></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Ville&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_ville">[% client.cli_ville | html %]</span></div>
+    </div>
+
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-2">
+      [% INCLUDE button_post.tt
+      url="${uri_base}/client/supprimer/${client.cli_numero}"
+      texte="confirmer la suppression" %]
+    </div>
+    <div class="col-sm-2">
+      [% INCLUDE button_get.tt
+      action="${uri_base}/client/liste"
+      texte="retour à la liste des clients" %]
+    </div>
+  </div>
+</fieldset>
+

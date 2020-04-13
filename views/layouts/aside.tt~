@@ -1,0 +1,10 @@
+<aside class="col-2">
+<div id="text_aside">
+<a href='tableaudebord.html'> Tableau de Bord </a> <br>
+<a href='mespub.html'> Mes Publications </a> <br>
+<a href='catalogueart.html'> Catalogue Articles</a> <br>
+<a href='cataloguejournal.html'> Catalogue Revues </a> <br>
+<a href='catalogueconf.html'> Catalogue Conférences </a> <br>
+<a href='groupes.html'> Groupes </a> <br>
+</div>
+</aside>

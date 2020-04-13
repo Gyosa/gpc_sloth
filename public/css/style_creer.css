@@ -1,0 +1,36 @@
+
+@font-face {
+	font-family: 'patuaone';
+	src: url('polices/PatuaOne-Regular.ttf')format('truetype');
+}
+
+h2{
+    font-size:40px;
+    color:#36622B;
+    margin-top:1.5%;
+    font-family: "patuaone";
+}
+
+li:hover{
+
+    
+    background-color: #36622B;
+}
+
+#soumission{
+
+	margin-top: 2%;
+}
+
+#try:hover{
+    background-color: #36622B;
+    color: #fff;
+
+
+
+}
+
+#reste{
+    margin-top:4%;
+}
+/*test*/

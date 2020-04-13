@@ -1,0 +1,20 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<div id="liste_des_groupes">
+
+  <div id="link_content">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="[% uri_base %]/css/stylegroupe.css"/>
+
+    <div class="col-10"> <h2> Les groupes</h2> </div>
+
+    [% FOREACH groupe = liste_groupes  %]
+
+    <div class="row" id="gp"> <div class="col-3" id="nom"> [% groupe | html%] </div> <div class="col-6" id="description"> Description du groupe </div> </div>
+
+    [% END %]
+
+  </div>
+</div>
+      

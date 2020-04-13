@@ -1,0 +1,20 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+  <link rel="stylesheet" href="[% uri_base%]/css/Accueil_css.css"/>
+
+<body style="background-image:url([% uri_base %]/images/fond.png)">
+
+  <div class="row">
+
+    <div class="col-3"><img src="[% uri_base %]/images/Sloth_200.png" class="mx-auto d-block"></div>
+
+    <div class="col-3" id="connect">
+      <h3 >Bonjour [% utilisateur.utilisateur_prenom %] </h3>
+      <a type="button" href="[% uri_base %]/dashboard" class="btn btn-success"> Entrer dans la jungle</a>
+    </div>
+
+    <div class="col-6"></div>
+
+  </div>
+  
+
+</body>

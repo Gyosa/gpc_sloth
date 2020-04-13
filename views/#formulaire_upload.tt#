@@ -1,0 +1,48 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- %]
+<reste class="col-11" id="reste">
+<form name="formulaire_utilisateur"
+      class="form-horizontal"
+      method="post"
+      action="[% uri_base %]/fichiers/upload"
+      enctype="multipart/form-data">
+
+  <br><br><br><br><br>
+
+  <legend>Ajouter un fichier</legend>
+
+  <div class="form-group">
+    <label for="fichier"
+	   class="col-sm-3 control-label">Ajoute ton fichier&nbsp;:</label>
+    <div class="col-sm-8">
+      <input type="file"
+	     name="file">
+    </div>
+  </div>
+
+  
+  [%~ INCLUDE champ.tt
+  nom="fichier_nom" valeur="${file.fichier_nom}"
+  label="Nom du fichier" %] 
+  
+  [%~ INCLUDE champ.tt
+  nom="fichier_commentaire" valeur="${file.fichier_nom}"
+  label="commentaire" %]
+  
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button class="btn btn-primary" type="submit">
+	Valider la création
+      </button>
+      <a class="btn btn-default"
+	 href="[% uri_base %]/utilisateur/liste"
+	 role="button">Revenir à la liste des utilisateurs</a>
+      <button class="btn btn-default pull-right"
+	      type="reset">RÀZ</button>
+    </div>
+  </div>  
+</form>
+</reste>
+
+
+

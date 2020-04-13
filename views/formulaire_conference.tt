@@ -1,0 +1,53 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+  
+  <h2> Créer une conférence </h2>
+  
+
+
+    <div class="col-5" id="nom">
+
+      <form name="formulaire_conference"
+            class="form-horizontal"
+            method="post"
+            [% IF conference.conference_id ~%]
+            action="[% uri_base %]/conferences/modifier/[% conference.conference_id %]"
+            [%~ ELSE ~%]
+            action="[% uri_base %]/conferences/creer"
+            [%~ END %]
+            enctype="multipart/form-data">
+      
+        [%~ INCLUDE champ.tt
+        nom="conference_nom" valeur="${conference.conference_nom}"
+        label="Nom de la conférence" msg="${msgs.conference_nom}" %]
+
+        [%~ INCLUDE champ.tt
+        nom="conference_description" valeur="${conference.conference_description}"
+        label="Description" msg="${msgs.conference_description}" %] 
+
+        [%~ INCLUDE champ.tt
+        nom="conference_site_web" valeur="${conference.conference_site_web}"
+        label="Site Web" msg="${msgs.conference_site_web}" %] 
+
+        <button class="btn btn-success" type="submit">
+           [% IF conference.conference_id ~%]
+            Valider les modifications
+            [% ELSE %]
+            Valider la création
+            [% END %]
+        </button>
+        
+
+        
+	</div> 
+
+</form>
+      
+</div>
+
+
+
+</reste>

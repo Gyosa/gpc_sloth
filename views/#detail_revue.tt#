@@ -1,0 +1,107 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10">
+  
+  <h2> [% revue.revue_nom %] </h2>
+
+  <div class="row">
+    <a class="col-5" id="lienjournal" href="[% revue.revue_site_web %]"> [% revue.revue_site_web %] </a>
+    <div class="col-1"></div>
+    <div class="col-4" id="titrelistearticle">
+      Articles du centre dans cette revue
+    </div>
+    <div> 
+      <a href="" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_ajout_article">
+	Ajouter un <br> article
+      </a>
+    </div>
+  </div>
+  
+  <div class="row"> 
+    <div class="col-5" id="descriptionjournal">
+      [% revue.revue_description %]
+    </div>
+    <div class="col-1"></div>
+     
+    <div class="col-5" id="listearticles">
+      [% FOREACH article = liste_articles %]
+      <a class="row" id="article" href="[% uri_base %]/articles/afficher/[% article.article_id %]">
+	<div id="nom">
+	  [% article.article_nom %]
+	</div>
+	<div class="col-2">
+	</div>
+	<div id="date">
+	  [% article.article_id %]
+	</div> 
+      </a>
+      [% END %]
+      
+    </div>
+  </div>
+      
+  <div class="row">
+    <div class="col-5" id="titrelistearticle">
+      Consignes :
+    </div>
+    <div class="col-1"></div>
+    <div class="col-4" id="titrelistearticle">
+      Hors-séries à prévoir pour cette revue :
+      </div> 
+    <div>
+      <a href="[% uri_base %]/revues/creer_hors_serie/[% revue.revue_id %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_ajout_hs">
+	Ajouter un <br> hors-série
+      </a>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-4">
+    <a  id="lienjournal"  href="[% revue.revue_consignes %]">
+      [% revue.revue_consignes %]
+    </a>
+    </div>
+    <div class="col-2">
+    </div>
+    [% IF liste_hs_exists == 1 %]
+    <div class="col-4" id="listehorsserie">
+      [% FOREACH hs = liste_hs %]
+      <a class="row" id="hs" href="[% uri_base %]/revues/afficher/[% revue.revue_id %]/horsserie">
+	[% hs.hors_serie_id %]
+      </a>
+      [% END %]
+      [% ELSE %]
+      [% END %] 
+    </div>	
+  </div>
+
+ <div id="lesbtn">
+  <div>
+    <a href="[% uri_base %]/revues/modifier/[% revue.revue_id %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_modif"> Modifier
+    </a>
+  </div>
+  <div class="col-1"></div>
+  <div>
+      <button class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_suppr" onclick="valider()">
+	Supprimer
+      </button>
+  </div>
+ </div>
+
+<script>
+  function valider() {
+  var ok = confirm("Voulez-vous vraiment supprimer cette revue ?");
+  if(ok == true){
+  
+  alert("Cette revue  a bien été supprimée");
+  document.location.href="[% uri_base %]/revues/liste";
+  }else{
+  document.location.href="[% uri_base %]/revues/afficher/[% revue.revue_id %]";
+  }
+}
+</script>
+
+  
+</reste> 

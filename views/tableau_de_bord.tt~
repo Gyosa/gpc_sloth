@@ -1,0 +1,7 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10">
+  
+  <h2> [% conference.conference_nom  %] </h2>

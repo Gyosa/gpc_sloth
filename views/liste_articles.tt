@@ -1,0 +1,278 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<!-- CSS liste -->
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+<style> #myUL {
+    list-style-type: none;
+    width:100%;
+  }
+</style>
+<reste class="col-10">
+<!-- Titre, bouton ajouter, filtre recherche et boutons radio-->
+    <div class="col-10" > <h2> Articles </h2> </div>
+    <div class="col-2">
+      <button onclick="popup()" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout">
+	Ajouter un article
+      </button>
+    </div>
+    <div class="row">
+      <div class="col-4">
+	<div  id="petittexte"> Rechercher partout </div>
+	<input class="form-control" id="myInput" type="text" placeholder="Search.." onkeyup="func()">
+	
+  <div>
+	  A publier/publié dans 
+          <div>
+          <input type="radio" id="touschecked" name="br" checked="checked" onclick="trier()"> Tous
+          <input type="radio" id="confchecked" name="br"  onclick="trier()">Conférence   
+	        <input type="radio" id="revchecked" name="br" onclick="trier()"> Revue
+          <input type="radio" id="hschecked" name="br" onclick="trier()"> Hors-série <br>
+          </div>
+	</div>
+      </div>
+      <div class="col-2"> </div>
+      <div class="col-6">
+	<div id="petittexte"> Options de recherche
+	</div>
+	
+	<div>
+  <input type="radio" id="tous" name="tri" checked="checked" onclick="trier()">
+   <label for="horsserie"> Tous </label></div>
+   <div>
+  <input type="radio" id="redac" name="tri" onclick="trier()">
+	<label for="horsserie"> Afficher seulement les articles en cours de rédaction </label>
+	</div>
+	<div>
+    <input type="radio" id="accepte" name="tri" onclick="trier()">
+	  <label for="articleencours">Afficher seulement les articles acceptés et publiés </label>
+	</div>
+	<div>
+    <input type="radio" id="refuse" name="tri" onclick="trier()">
+	  <label for="articleencours">Afficher les articles refusés (absents par défaut) </label>
+	</div> 
+      </div>
+    <!-- Liste des articles -->
+  <div class="col-12" id="petittexte"> Cliquer sur un article pour avoir plus d'informations </div>
+      <ul id="myUL">
+      [% FOREACH truc = liste_articles %] <!--liste_articles est un objet qui en contient 4 : Un article, un index qui correspond 
+      à si l'article se destine à être publié dans une revue/une conférence/un hors-série, le parent correspondant (revue, conférence, hors-série), et la liste des auteurs -->
+      [% IF truc.3.statut_nom != "refuse" %]
+      <li> <a href="[% uri_base %]/articles/afficher/[% truc.0.article_id | uri%]" >
+      <div id="revue" style="height:65px">
+	      <div class="row">
+          <div class="col-3" id = "nom"> 
+            [% IF truc.0.article_nom %] [% truc.0.article_nom | html %] [% ELSE %] Nom de l'article [% END %] 
+          </div> 
+          <div class="col-2" id="pubcom">
+            [% IF truc.1 == 1 %] Conférence [% ELSIF truc.1 == 2 %] Hors-série [% ELSIF truc.1 == 3 %] Revue [% END %]
+          </div> 
+          <div class="col-3" id="commentaire"> [% IF truc.1 == 1 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.edition_conf_nom %] [% ELSE %] Nom conférence absent [% END %]
+                                             [% ELSIF truc.1 == 2 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.hors_serie_nom %] [% ELSE %] Nom du hors-série manquant [% END %]
+                                             [% ELSIF truc.1==3 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.revue_nom %] [% ELSE %] Nom de la revue manquante [% END %]
+                                              [% END %]
+          </div>
+          <div class="col-2" id="commentaire"> 
+            [% IF truc.0.article_mot_cle %] [% truc.0.article_mot_cle | html %] [% ELSE %] Mot clés absents [% END %]
+          </div>
+          <div class="col-2" id="commentaire"> 
+            [% IF truc.3 %] [% truc.3.statut_nom %] [% ELSE %] Statut absent [% END %] 
+          </div>
+        </div>
+        <div class="row" style="margin-left:52px;">
+          <div id="commentaire">  [% IF truc.4.size != 0 %] Rédigé par [% FOREACH auteur = truc.4 %] [% auteur.utilisateur_nom %] [% auteur.utilisateur_prenom %], [% END %][% ELSE %] Aucun auteur attitré [% END %]
+          </div>
+        </div></div>
+      </a> </li>
+    
+      [% ELSIF truc.2.statut.nom=="refuse" %]
+      <li display="none"> <a class="row" id="revue" href="[% uri_base %]/articles/afficher/[% truc.0.article_id | uri%]" >
+	
+	      <div class="col-2" id = "nom"> [% IF truc.0.article_nom %] [% truc.0.article_nom | html %] [% ELSE %] Nom de l'article [% END %] </div> 
+        <div class="col-2" id="pubcom"> [% IF truc.1 == 1 %] Conférence [% ELSIF truc.1 == 2 %] Hors-série [% ELSIF truc.1 == 3 %] Revue [% END %]</div> 
+        <div class="col-3" id="commentaire"> [% IF truc.1 == 1 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.edition_conf_nom %] [% ELSE %] Nom conférence absent [% END %]
+                                             [% ELSIF truc.1 == 2 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.hors_serie_nom %] [% ELSE %] Nom du hors-série manquant [% END %]
+                                             [% ELSIF truc.1==3 %]
+                                                [% IF truc.2.0 %] [% truc.2.0.revue_nom %] [% ELSE %] Nom de la revue manquante [% END %]
+                                              [% END %]
+        </div>
+        <div class="col-2" id="commentaire"> [% IF truc.0.article_mot_cle %] [% truc.0.article_mot_cle | html %] [% ELSE %] Mot clés absents [% END %]</div>
+        <div class="col-2" id="commentaire"> [% IF truc.3 %] [% truc.3.statut_nom %] [% ELSE %] Statut absent [% END %] </div>
+      [% END %]
+      [% END %]  
+      </ul>
+    </div>
+  </div>
+
+ <!-- "popup" s'affichant lorsque l'utilisateur appuie sur le bouton "ajouter un article" --> 
+  <div id="mess" style="display:none; top:100px; 
+    left:100px; 
+    width:400px;
+    height:150px; background-color:#36622B; margin-left:300px; margin-top:150px; text-align:center; margin-bottom:50%">
+   <h3> Souhaitez-vous publier pour : </h3>
+    <button type="button" onclick="gocreerpubli();">Revue</button>&nbsp;
+    <button type="button" onclick="gocreercom();">Conférence</button>
+  </div>
+
+</reste>
+
+<script>
+  function popup() //fonction qui efface l'ensemble de la page pour n'afficher que le pop up de redirection vers création d'une publication ou communication 
+  {
+  document.getElementById("mess").style.display = "block";
+  document.getElementById("reste").style.display = "none";
+  }
+  
+  function gocreerpubli() //fonction pour rediriger vers la page voulue
+  {
+  document.location.href="[% uri_base %]/articles/publication/creer";
+  }
+  function gocreercom(){ //idem
+  document.location.href="[% uri_base %]/articles/communication/creer";
+  }  
+</script>
+
+<script>
+  function func(){ //filtre de recherche 
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) { //on parcourt la liste des articles 
+		  a = li[i].getElementsByTagName("a")[0];
+		  txtValue = a.textContent || a.innerText;
+		  if (txtValue.toUpperCase().indexOf(filter) > -1) {  //on compare l'input aux infos de chaque article 
+        li[i].style.display = "";
+      } 
+      else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+</script>       
+
+<script>
+  function trier(){ //bouton radio pour trier les articles 
+    var r, t, ac, re, rv, cf, ts, hs, ul, li, a, i, txtValue;
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    rv=document.getElementById("revchecked");
+    cf=document.getElementById("confchecked");
+    ts=document.getElementById("touschecked");
+    hs=document.getElementById("hschecked");
+    r=document.getElementById("redac");
+    re=document.getElementById("refuse");
+    t=document.getElementById("tous");
+    ac=document.getElementById("accepte");
+    for (i = 0; i < li.length; i++) { // on parcourt la liste des articles 
+		  a = li[i].getElementsByTagName("a")[0];
+		  txtValue = a.textContent || a.innerText;
+      if ((rv.checked==1) && (t.checked==1)){ //on vérifie quels boutons sont checkés et on effectue l'opération correspondante 
+		    if (txtValue.toUpperCase().indexOf("Revue".toUpperCase()) > -1) {
+          li[i].style.display = "";
+        } 
+        else {
+        li[i].style.display = "none";
+        }
+      }
+      else if (cf.checked==1 && t.checked==1){
+        if(txtValue.toUpperCase().indexOf("Conférence".toUpperCase()) > -1){
+          li[i].style.display ="";
+        }
+        else{
+          li[i].style.display = "none"; 
+        }
+      }
+      else if ((ts.checked == 1) && (t.checked==1)){
+        li[i].style.display="";
+      }
+      else if((hs.checked==1) && (t.checked==1)){
+        if(txtValue.toUpperCase().indexOf("Hors-Série".toUpperCase()) > -1){
+          li[i].style.display ="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if ((ts.checked==1)&&(r.checked==1)){
+        if ((txtValue.toUpperCase().indexOf("redaction".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }   
+      else if ((ts.checked==1)&&(re.checked==1)){
+        if ((txtValue.toUpperCase().indexOf("refuse".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }   
+       else if ((ts.checked==1)&&(ac.checked==1)){
+        if ((txtValue.toUpperCase().indexOf("accepte".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("online".toUpperCase())>1) || (txtValue.toUpperCase().indexOf("publie".toUpperCase())>1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }   
+      else if(r.checked==1 && cf.checked==1){
+        if((txtValue.toUpperCase().indexOf("Redaction".toUpperCase()) > -1) && (txtValue.toUpperCase().indexOf("Conférence".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if(r.checked==1 && rv.checked==1){
+        if((txtValue.toUpperCase().indexOf("Redaction".toUpperCase()) > -1) && (txtValue.toUpperCase().indexOf("Revue".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if(r.checked==1 && hs.checked==1){
+        if((txtValue.toUpperCase().indexOf("Redaction".toUpperCase()) > -1) && (txtValue.toUpperCase().indexOf("Hors-série".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if(ac.checked==1 && cf.checked==1){
+        if(((txtValue.toUpperCase().indexOf("accepte".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("publie".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("online".toUpperCase()) > -1)) && (txtValue.toUpperCase().indexOf("Conférence".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if(ac.checked==1 && rv.checked==1){
+        if(((txtValue.toUpperCase().indexOf("accepte".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("publie".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("online".toUpperCase()) > -1)) && (txtValue.toUpperCase().indexOf("Revue".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+      else if(ac.checked==1 && hs.checked==1){
+        if(((txtValue.toUpperCase().indexOf("accepte".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("publie".toUpperCase()) > -1) || (txtValue.toUpperCase().indexOf("online".toUpperCase()) > -1)) && (txtValue.toUpperCase().indexOf("Hors-série".toUpperCase()) > -1)){
+          li[i].style.display="";
+        }
+        else{
+          li[i].style.display="none";
+        }
+      }
+    }
+   }
+</script>
+
+<!-- voir documentation sur <http://datatables.net/manual/index> -->

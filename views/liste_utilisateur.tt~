@@ -1,0 +1,77 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+[% IF critere_usr_nom.defined or critere_usr_prenom.defined %]
+<div class="alert alert-warning">
+  [% IF critere_usr_nom.defined %]
+  Nom contenant '[% critere_usr_nom | html %]' &mdash;
+  [% END %]
+  [% IF critere_usr_prenom.defined %]
+  Code postal est [% critere_usr_prenom | html %] &mdash;
+  [% END %]
+  [% INCLUDE button_get.tt
+  action="${uri_base}/Utilisateur/liste"
+  texte="Supprimer filtre"
+  glyphicon="remove-circle" %]
+</div>
+[% END %]
+  
+<table id="liste_user" class="table table-condensed table-responsive">
+  <thead>
+    <tr>
+      <th>N°id</th>
+      <th>Auth</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th></th>
+    </tr>
+  </thead>
+  
+  
+  <tbody>
+    [% FOREACH utilisateur = utilisateurs %]
+    <tr [% IF loop.count % 2 != 0 %]class="odd"[% END %]>
+      <td>[% utilisateur.utilisateur_id | html %]</td>
+      <td>[% utilisateur.utilisateur_auth | html %]</td>
+      <td>[% utilisateur.utilisateur_nom | html %]</td>
+      <td>[% utilisateur.utilisateur_prenom | html %]</td>
+      <td style="white-space: nowrap;">
+	<a href="[% uri_base %]/utilisateur/supprimer/[% client.cli_numero | uri %]"
+	   title="Supprimer"
+	   class="btn btn-default">
+	  <span class="glyphicon glyphicon-trash"></span>
+	</a>
+      </td>
+    </tr>
+    [% END %]
+  </tbody>
+  
+</table>
+
+<!-- voir documentation sur <http://datatables.net/manual/index> -->
+<script type="text/javascript">
+  $(document).ready(function(){
+  $('#liste_user').DataTable( {
+       "renderer": "bootstrap",
+       "scrollX": true,
+       "autoWidth": false,
+       "columnDefs": [
+         { "orderable": false, "targets": -1 } // la dernière colonne n'est pas triable
+       ],
+      "language": {
+        "lengthMenu": "Afficher _MENU_ lignes par page",
+        "zeroRecords": "Aucun client à afficher",
+        "info": "Page _PAGE_ sur _PAGES_",
+        "infoEmpty": "Aucun client dans la table",
+        "infoFiltered": "(sélection à partir d'un total de _MAX_ clients)",
+        pagingType: 'full',
+        paginate: {
+            first:    'Premier',
+            previous: 'Précédent',
+            next:     'Suivant',
+            last:     'Dernier',
+         },
+      }
+    });
+    $('#liste_user').addClass('table table-striped table-bordered');
+  });
+</script>

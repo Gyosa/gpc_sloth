@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+  
+  <div class="col-10"> <h2> [% titre %] </h2> </div>
+  
+  <div class="row" id="titre"> 
+
+    <div class="col-5" id="nom">
+
+      <form name="formulaire_revue"
+            class="form-horizontal"
+            method="post"
+            [% IF revue.revue_id ~%]
+            action="[% uri_base %]/revues/modifier/[% revue.revue_id %]"
+            [%~ ELSE ~%]
+            action="[% uri_base %]/revues/creer"
+            [%~ END %]
+            enctype="multipart/form-data">
+      
+        [%~ INCLUDE champ.tt
+        nom="revue_nom" valeur="${revue.revue_nom}"
+        label="Nom de la revue" msg="${msgs.revue_nom}" %]
+
+        [%~ INCLUDE champ.tt
+        nom="revue_description" valeur="${revue.revue_description}"
+        label="Description" msg="${msgs.revue_description}" %] 
+
+        [%~ INCLUDE champ.tt
+        nom="revue_theme" valeur="${revue.revue_theme}"
+        label="Thème" msg="${msgs.revue_theme}" %] 
+
+        [%~ INCLUDE champ.tt
+        nom="revue_site_web" valeur="${revue.revue_site_web}"
+        label="Site_Web" msg="${msgs.revue_site_web}" %] 
+
+        [%~ INCLUDE champ.tt
+        nom="revue_consignes" valeur="${revue.revue_consignes}"
+        label="Consignes" msg="${msgs.revue_consignes}" %] 
+
+        <!-- si existant modification sinon création -->
+        <button class="btn btn-success" type="submit">
+           [% IF revue.revue_id ~%]
+            Valider les modifications
+            [% ELSE %]
+            Valider la création
+            [% END %]
+        </button>
+        
+
+        
+	</div> 
+
+</form>
+      
+</div>
+</div>
+</reste>    
+  
+    

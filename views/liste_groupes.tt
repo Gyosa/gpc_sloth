@@ -1,0 +1,120 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+
+
+
+
+<reste class="col-10" id=reste>
+	
+    <div class="row">
+      <div class="col-3"> <h2> Les groupes</h2></div>
+      <div class="col-1"></div>
+      
+    <a href="[% uri_base %]/groupes/creer">
+        <button type="button" class="btn btn-success" style="margin-top:10%">Créer un groupe</button> 
+    </a>
+
+  </div>
+
+
+<div class="row">
+    <div class="col-10">
+    
+        <div  id="petittexte"> Rechercher dans le titre </div>
+        <input class="form-control col-5" id="myInput" onkeyup="myFunction()" type="text" placeholder="Search..">
+        <div id="petittexte"> Rechercher par membre</div>
+    	<div class="row" style="margin-bottom:5%"> 
+            <input class="form-control col-5" id="myInput2" type="text" style="margin-right:5%; margin-left:2%" placeholder="Taper puis cliquer sur le bouton recherche"> 
+            <button type="button" class="btn btn-success" onclick="searchoui()">Rechercher</button> </div> 
+        </div>
+
+    <ul id="myUL" style="list-style-type: none; width:100%">
+        [% FOREACH this_groupe = liste_groupes %]
+
+        <li> 
+            <span class="row" id="revue" >
+
+                <div class="col-3" id = "nom"> 
+                    [% this_groupe.0.groupe_nom | html %]
+                </div> 
+
+
+                <div class="col-3" id="commentaire"> 
+                    [% this_groupe.0.groupe_description | html %]  
+                </div>
+
+                <div class="col-2"></div>
+
+                <div class="dropdown" id="membres">
+                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" title="Liste des membres">Membres
+                    </button>
+                    <div class="dropdown-menu">
+                        [%FOREACH membre = this_groupe.1 %]
+                        <div id="poto" style = "color: #36622B;
+                        text-align: center;"> <em>[% membre.utilisateur_prenom %] [% membre.utilisateur_nom %] </em> <br> </div> 
+                        [%END%]
+                    </div>
+                </div>
+
+                <a type="button" id ="btn_suppr"  title="Modifier" class="btn btn-success" href="[% uri_base %]/groupes/modifier/[% this_groupe.0.groupe_id %]">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a type="button"  href="[% uri_base %]/groupes/supprimer/[% this_groupe.0.groupe_id %]" class="btn btn-success  btn-circle"  title="Supprimer" id="btn_suppr" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce groupe?')"> <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                
+            </span>
+        </li>
+        [% END %]
+    </ul>
+</div>
+
+
+<script type="text/javascript">
+	function myFunction() {
+
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput"); 
+        filter = input.value.toUpperCase();  // on récupère la valeur entrée dans le input
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");// on se place dans la liste des groupes 
+        for (i = 0; i < li.length; i++) { // on parcourt cette liste
+            a = li[i].getElementsByTagName("span")[0]; // on parcourt la liste des noms 
+            txtValue = a.textContent || a.innerText || a.innerHTML; 
+            if (txtValue.toUpperCase().indexOf(filter) > -1) { // si le nom du groupe contient le bon patern, on l'affiche, sinon on le cache
+                li[i].style.display = "";
+            } 
+            else {
+                li[i].style.display = "none";
+            }
+        }
+    } 
+</script>
+
+<script type="text/javascript">
+	function searchoui() {
+        var input, filter, ul, li, a, i, j, txtValue; 
+
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase(); // on récupère la valeur entrée dans le input
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li"); // on se place dans la liste des groupes 
+        for (i = 0; i < li.length; i++) { // on parcourt cette liste 
+            li[i].style.display="none"; 
+            a = li[i].getElementsByTagName("em");
+            for (j=0;j<a.length;j++){ // on parcourt la liste des membres de groupe
+                txtValue = a[j].textContent || a[j].innerText || a[j].innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "block";
+                } 
+            }
+        }
+    } 
+</script>
+
+</reste>
+
+
+
+

@@ -1,0 +1,123 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+[% USE Dumper %]
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=[% settings.charset %]" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+   
+    
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>
+      Sloth -
+      [% IF titre.defined %]
+      [% titre | html %]
+      [% ELSE %]
+      Application de gestion d'un centre de recherche
+      [% END %]
+    </title>
+    <!--favicon sloth -->
+    <link rel="icon" href= "[% uri_base %]/images/favicon_sloth.png" />
+    
+    <!-- pour utiliser une police externe (depuis google fonts) -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic"
+      rel="stylesheet" type="text/css">
+
+    <!-- CSS: Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+	  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	  crossorigin="anonymous">
+
+    <!-- CSS: Bootstrap optional theme -->
+    <!-- <link rel="stylesheet"
+	 href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	 integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	 crossorigin="anonymous"> -->
+
+    <!-- CSS: DataTables spécifique pour bootstrap -->
+    <link rel="stylesheet"
+	  type="text/css"
+	  href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css" />
+
+    <!-- CSS: base -->
+    <link rel="stylesheet" href="[% uri_base %]/css/base.css"/>
+
+    <!-- Javascript: JQuery -->
+    <script type="text/javascript"
+	    src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Javascript: MutliSelect 
+    <script type="text/javascript"
+	    src="https://raw.githubusercontent.com/crlcu/multiselect/master/dist/js/multiselect.js"></script>-->
+
+    <!-- Javascript: DataTables -->
+    <script type="text/javascript"
+	    src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"
+	    src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+  </head>
+  [% IF titre != "Accueil" %] <!-- Si la page est différente de la page d'accueil -->
+  <body>
+  
+    [% INCLUDE "layouts/nav.tt" %] <!-- On ajoute la topbar-->
+    
+
+ 
+
+    <div class="row">
+
+      <div class="col-2" id="sidenav"> <!-- sidebar-->
+        [% FOR item IN menu %]
+          <a id="cote" href='[% uri_base %][% item.route %]'> [% item.texte %] </a> <br>
+        [% END %]
+        <div id="foot">
+         <a href="[% uri_base %]/dedicace" style="color:white;"> Ninjas 2018-2019 </a>
+        </div>
+      </div>
+
+      <div class="col-9" id="reste">
+      
+	      [% content %] <!-- On ajoute la template de la page -->
+       <!-- [% INCLUDE "layouts/messages-debug.tt" %]-->
+      </div>
+
+    </div>
+
+    
+
+
+  
+
+<!-- Javascript: Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+
+</body>
+[% ELSE %] <!-- Si on est sur la page d'accueil -->
+
+[% INCLUDE "accueil.tt" %]
+
+[% END %]
+</html>
+
+<script type=”text/javascript” src=”http://code.jquery.com/jquery-1.5.2.min.js”>
+var positionElementInPage = $('#haut').offset().top;
+$(window).scroll(
+ function() {
+ if ($(window).scrollTop() &gt;= positionElementInPage) {
+ // fixed
+ $('#haut').addClass("floatable");
+ } else {
+ // relative
+ $('#haut').removeClass("floatable");
+ }
+ }
+);
+</script>

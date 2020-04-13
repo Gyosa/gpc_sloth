@@ -1,0 +1,15 @@
+[%# -*- coding: utf-8; -*- %]
+[% USE Dumper %]
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+    <div id="textenul" style="margin-top:10%; margin-left:40%">
+  <div style="margin-left:7%">  <h4 style="color:red">Route non trouvée</h4>
+    
+     <p><em>Methode: [% request.method %]</em><br>
+        <em>Chemin: [% path %] </em> </p> </div>
+
+<!-- <li>Voici la requete: [% Dumper.dump_html(request) %] -->
+    <img src="[% uri_base %]/images/sloth.gif" alt='paresseux' > 
+    </div>
+</reste>

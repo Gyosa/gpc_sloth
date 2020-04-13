@@ -1,0 +1,48 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- %]
+<form name="formulaire_commande"
+      class="form-horizontal"
+      method="post"
+      [% IF commande.cmd_numero ~%]
+          action="[% uri_base %]/commande/modifier/[% commande.cmd_numero %]"
+      [%~ ELSE ~%]
+          action="[% uri_base %]/commande/creer"
+      [%~ END %]
+      enctype="multipart/form-data">
+
+  <legend>Données de la commande à créer ou modifier</legend>
+  
+  [%~ INCLUDE champ_readonly.tt
+      nom="cmd_numero" valeur="${commande.cmd_numero}"
+      label="Numéro commande" msg="${msgs.cmd_numero}" readonly="readonly" %] 
+  
+  [%~ INCLUDE champ_readonly.tt nom="cmd_cli_nom"
+      valeur="${commande.cmd_cli_numero.cli_numero} / ${commande.cmd_cli_numero.cli_nom}"
+      label="Numéro et nom client" readonly="disabled" %] 
+  
+  [%~ INCLUDE champ.tt
+      nom="cmd_date" valeur="${commande.cmd_date.dmy('/')}"
+      label="Date commande" msg="${msgs.cmd_date}" %] 
+  
+  [%~ INCLUDE champ.tt
+      nom="cmd_montant_ht" valeur="${commande.cmd_montant_ht}"
+      label="Montant EUR HT" msg="${msgs.cmd_montant_ht}" %] 
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      [% IF commande.cmd_numero ~%]
+      <button class="btn btn-primary"
+	      type="submit">Valider les modifications</button>
+      [% ELSE %]
+      <button class="btn btn-primary"
+	      type="submit">Valider la création</button>
+      [% END %]
+      <a class="btn btn-default" 
+	 href="[% uri_base %]/commande/liste"
+	 role="button">Revenir à la liste des commandes</a>
+      <button class="btn btn-default pull-right"
+	      type="reset">RÀZ</button>
+    </div>
+  </div>
+  <input type="hidden" name="cmd_numero" value="[% commande.cmd_numero %]" />
+  <input type="hidden" name="cmd_cli_numero" value="[% commande.cmd_cli_numero.cli_numero %]" />
+</form>

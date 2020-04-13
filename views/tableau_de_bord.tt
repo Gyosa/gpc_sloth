@@ -1,0 +1,235 @@
+	[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+<!-- Titre, description et filtres -->
+	<h2> Tableau de bord </h2>
+
+	<input type="radio" name="optradio" id="avenir" checked="checked"  onclick="hide()"> A venir
+	<input type="radio" name="optradio"  id ="activitecentre" onclick="hide()">Activité du centre
+	
+	<div id="centre" style="display: none" > <!-- Partie qui apparaitra seulement si le bouton Activité du centre est coché -->
+		Vous trouverez dans cette partie la liste des articles ayant été publiés (en papier ou en ligne) ou présentés lors d'une conférence. Vous avez la possibilité 
+		de visualiser ceux publiés dans le dernier mois, dans les derniers trois mois ou dans les derniers 6 mois. 
+		<h3>Visualisation soumission</h3>
+		<div id="choix">
+			<label class="radio-inline"><input type="radio" name="rad" checked="checked" id="mouse_1" checked onclick="show()">1 mois</label>
+			<label class="radio-inline"><input type="radio" name="rad" id="mouse_3" onclick="show()">3 mois</label>
+			<label class="radio-inline"><input type="radio" name="rad" id="mouse_6" onclick="show()">6 mois</label> 
+		</div>
+
+		<div id="un" > <!-- Partie qui apparaitra seulement si le bouton 1 mois est coché -->
+			[% FOREACH article = liste_alerte.0 %]
+				[% IF article.article_statut_id == 2 || article.article_statut_id == 3 %]
+		<a href="[% uri_base %]/articles/afficher/[% article.article_id %]">
+			<div class="row" id="revue"> 
+				<div class="col-4" id = "nom"> 
+					[% IF article.article_nom %] [% article.article_nom %] [% ELSE %] Titre manquant [% END %]
+				</div> 
+				<div class="col-3" id="nom"> 
+				
+					[% IF article.article_statut_id == 2 %] Online
+					[% ELSIF article.article_statut_id == 3 %] Publié 
+					[% END %]
+				</div >
+				<div class="col-1"></div>
+				<div class="col-4" id="nom"> 
+				Date limite de soumission :
+				[% IF article.article_date_limite_soumission %]
+				[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+				[% ELSE %]
+				non renseignée
+				[% END %]
+				</div >
+			</div>
+		</a>
+			[%END%][% END %]
+		</div>
+
+		<div id="trois" style = 'display:none;'>  <!-- Partie qui apparaitra seulement si le bouton 3 mois est coché -->
+		[% FOREACH article = liste_alerte.1 %]
+			[% IF article.article_statut_id == 2 || article.article_statut_id == 3 %]
+		<a href="[% uri_base %]/articles/afficher/[% article.article_id %]">
+			<div class="row" id="revue"> 
+				<div class="col-4" id = "nom"> 
+					[% IF article.article_nom %] [% article.article_nom %] [% ELSE %] Titre manquant [% END %]
+				</div> 
+				<div class="col-3" id="nom"> 
+				
+					[% IF article.article_statut_id == 2 %] Online
+					[% ELSIF article.article_statut_id == 3 %] Publié 
+					[% END %]
+				</div >
+				<div class="col-1"></div>
+				<div class="col-4" id="nom"> 
+					Date limite de soumission :
+					[% IF article.article_date_limite_soumission %]
+					[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+					[% ELSE %]
+					non renseignée
+					[% END %] 
+				</div >
+			</div>
+		</a>
+			[%END%]
+		[%END%]
+		</div>
+
+		<div id="six" style = 'display:none;'> <!-- Partie qui apparaitra seulement si le bouton 6 mois est coché -->
+		[% FOREACH article = liste_alerte.2 %]
+			[% IF article.article_statut_id == 2 || article.article_statut_id == 3 %]
+		<a href="[% uri_base %]/articles/afficher/[% article.article_id %]">
+			<div class="row" id="revue"> 
+				<div class="col-4" id = "nom"> 
+					[% IF article.article_nom %] [% article.article_nom %] [% ELSE %] Titre manquant [% END %]
+				</div> 
+				<div class="col-3" id="nom"> 
+				
+					[% IF article.article_statut_id == 2 %] Online
+					[% ELSIF article.article_statut_id == 3 %] Publié 
+					[% END %]
+				</div >
+				<div class="col-1"></div>
+				<div class="col-4" id="nom"> 
+					Date limite de soumission :
+					[% IF article.article_date_limite_soumission %]
+					[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+					[% ELSE %]
+					non renseignée
+					[% END %]
+				</div >
+			</div>
+		</a>
+			[%END%][% END %]
+		</div>	
+
+	</div>
+
+
+	<div id="a_venir"> <!-- Partie qui apparaitra seulement si le bouton A venir est coché -->
+	Vous trouverez dans cette partie la liste des articles en cours de rédaction, la liste des articles en attente de retour après soumission et la liste des articles acceptés, en attente d'être publiés.
+		<h3>Soumission à venir</h3>	
+		
+		[% FOREACH article = liste_redac %]
+			[% IF liste_redac.size != 0 %]
+				<a href="[% uri_base %]/articles/afficher/[% article.article_id %]">
+					<div class="row" id="revue"> 						
+						<div class="col-4" id = "nom"> 
+							[% IF article.article_nom %][% article.article_nom %][% ELSE %] Titre manquant [% END %]
+						</div> 
+						<div class="col-3" id="nom">
+							En cours de rédaction
+						</div >
+						<div class="col-1">
+						</div>
+						<div class="col-4" id="nom"> 
+							Date limite de soumission :
+							[% IF article.article_date_limite_soumission %]
+							[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+							[% ELSE %]
+							non renseignée
+							[% END %]
+						</div>		
+					</div>
+				</a>
+			[% ELSE %]
+				Aucun article en cours de rédaction dans le centre
+			[% END %]
+		[% END %]
+		<h3>En attente de retour après soumission</h3>	
+		[% FOREACH article = liste_attente %]
+			[% IF liste_attente.size != 0 %]
+				<a href="[% uri_base %]/articles/affiches/[% article.article_id %]">
+					<div class="row" id="revue"> 						
+						<div class="col-4" id = "nom"> 
+							[% IF article.article_nom %][% article.article_nom %][% ELSE %] Titre manquant [% END %]				
+						</div> 
+						<div class="col-3" id="nom">
+							En attente de retour
+						</div >
+						<div class="col-1">
+						</div>
+						<div class="col-4" id="nom"> 
+							Date limite de soumission :
+							[% IF article.article_date_limite_soumission %]
+							[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+							[% ELSE %]
+							non renseignée
+							[% END %]
+						</div>		
+					</div>
+				</a>
+			[% ELSE %]
+				Aucun article en attente de retour dans le centre actuellement
+			[% END %]
+		[% END %]
+		<h3> Acceptés mais pas encore publiés </h3>
+		[% FOREACH article = liste_accepte %]
+			[% IF liste_accepte.size != 0 %]
+				<a href="[% uri_base %]/articles/affiches/[% article.article_id %]">
+					<div class="row" id="revue"> 						
+						<div class="col-5" id = "nom"> 
+							[% IF article.article_nom %][% article.article_nom %][% ELSE %] Titre manquant [% END %]				
+						</div> 
+						<div class="col-3" id="nom">
+							Accepté
+						</div >
+						<div class="col-1">
+						</div>
+						<div class="col-3" id="nom"> 
+							Date limite de soumission :
+							[% IF article.article_date_limite_soumission %]
+							[% USE date(format = '%d/%m/%Y', locale = 'fr_FR') %] [% date.format(article.article_date_limite_soumission) %] 
+							[% ELSE %]
+							non renseignée
+							[% END %] 
+						</div>		
+					</div>
+				</a>
+			[% ELSE %]
+				Aucun article en attente de publication dans le centre
+			[% END %]
+		[% END %]
+	</div>
+</reste>
+
+
+<script type="text/javascript">
+	function hide() //Fonction qui bascule l'affichage entre l'activité du centre et les publications à venir 
+	{
+		var c = document.getElementById("activitecentre");
+		var a = document.getElementById("avenir");
+		if (c.checked==1){
+			document.getElementById("centre").style.display = "";
+			document.getElementById("a_venir").style.display = "none";
+		}
+		else if (a.checked==1){
+			document.getElementById("centre").style.display = "none";
+			document.getElementById("a_venir").style.display = "";
+		}	
+	}
+</script>
+
+<script>
+	function show(){ //Fonction qui bascule l'affichage de l'activité du centre entre 1 mois, 3 mois et 6 mois  
+		un=document.getElementById("mouse_1");
+		trois=document.getElementById("mouse_3");
+		six=document.getElementById("mouse_6");
+		if(un.checked==1){
+			document.getElementById("un").style.display = "";
+			document.getElementById("trois").style.display = "none";
+			document.getElementById("six").style.display = "none";
+		}
+		else if(trois.checked==1){
+			document.getElementById("un").style.display = "none";
+			document.getElementById("trois").style.display = "";
+			document.getElementById("six").style.display = "none";
+		}
+		else if(six.checked==1){
+			document.getElementById("un").style.display = "none";
+			document.getElementById("trois").style.display = "none";
+			document.getElementById("six").style.display = "";
+		}
+	}
+</script>

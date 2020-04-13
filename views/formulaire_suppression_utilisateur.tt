@@ -1,0 +1,34 @@
+[%# ce fichier est un template -*- mode: html; coding: utf-8; -*- %]
+<fieldset>
+  <legend>Fiche d'identité du utilisateur</legend>  
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Auth&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_nom">[% utilisateur.utilisateur_auth | html %]</span></div>
+    </div>
+  
+    <div class="row">
+      <div class="col-sm-3 text-right">Nom&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_nom">[% utilisateur.utilisateur_nom | html %]</span></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3 text-right">Prénom&nbsp;:</div>
+      <div class="col-sm-9"><span class="cli_nom">[% utilisateur.utilisateur_prenom | html %]</span></div>
+    </div>
+
+
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-2">
+      [% INCLUDE button_post.tt
+      url="${uri_base}/utilisateur/supprimer/${utilisateur.utilisateur_id}"
+      texte="confirmer la suppression" %]
+    </div>
+    <div class="col-sm-2">
+      [% INCLUDE button_get.tt
+      action="${uri_base}/utilisateur/liste"
+      texte="retour à la liste des utilisateurs" %]
+    </div>
+  </div>
+</fieldset>
+

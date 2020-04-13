@@ -1,0 +1,89 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+<div class="row" style="margin-bottom:30px">
+  <div class="col-8">
+    <!-- Affiche des informations de l'édition ssi elles existent -->
+   <h2> [% edition_conf.edition_conf_nom %], </h2>  <h3>à [% IF edition_conf.edition_conf_ville %] [% edition_conf.edition_conf_ville %] [% ELSE %] ville manquante [% END %],
+   du 
+   [% IF edition_conf.edition_conf_date_debut %] [% USE date(format = '%A %d %B %Y', locale = 'fr_FR') %] [% date.format(edition_conf.edition_conf_date_debut) %] [% ELSE %] (date manquante) [% END %] au [% IF edition_conf.edition_conf_date_fin %]
+   [% USE date(format = '%A %d %B %Y', locale = 'fr_FR') %] [% date.format(edition_conf.edition_conf_date_fin) %] 
+   [% ELSE %] (date manquante) [% END %]
+   </h3> 
+  </div>
+ <div class="col-4">
+        <a href="[% uri_base %]/[%conference_id%]/edition_conf/modifier/[% edition_conf.edition_conf_id %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_modif" style="margin-top:20%"> 
+          Modifier
+        </a>
+        <a href="[% uri_base %]/[%conference_id%]/edition_conf/supprimer/[% edition_conf.edition_conf_id %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_suppr" style="margin-top:20%" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette édition de conférence ?')">
+          Supprimer
+        </a>
+  </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-5" id="partgauche">
+      <div id="lienjournal">
+        [% IF edition_conf.edition_conf_site %] <a class="col-5" class="btn btn-success btn-circle btn-lg" id="lienjournal" href="[% edition_conf.edition_conf_site %]" >
+            Site Web
+          </a>[% ELSE %] Site web manquant [% END %]
+      </div>
+      <div id="description">
+        [% IF edition_conf.edition_conf_description %] [% edition_conf.edition_conf_description %] [% ELSE %] Description manquante [% END %]
+      </div>
+      <div id="titrelistearticle" style="margin-top:5%">
+        <!-- Lien vers les consignes (site internet) -->
+        [% IF edition_conf.edition_conf_consignes %]
+          <a class="col-5" class="btn btn-success btn-circle btn-lg" id="lienjournal" href="[% edition_conf.edition_conf_consignes %]" >
+            Consignes
+          </a>
+          [% ELSE %] Consignes manquantes [% END %]
+      </div>  
+    </div>
+    <div class="col-1"></div>
+    <div class="col-6" id=partdroite>
+     <div id="titrelistearticle">
+      [% USE date(format = '%A %d %B %Y', locale = 'fr_FR') %]
+      [% IF edition_conf.edition_conf_date_limite_soumission %]
+      Date limite de soumission : [% date.format(edition_conf.edition_conf_date_limite_soumission) %]
+      [% ELSE %] Pas de date limite renseignée [% END %]
+
+      </div>    
+    </div> 
+  </div>
+  <!-- On liste les articles publiés par qqun du centre pour cette édition de conférence -->
+  <div class="col-10" style="margin-top:5%">
+      <div id="titrelistearticle" style="justify-content:space-between">
+        Articles du centre dans cette édition de conférence
+       <a href="[% uri_base %]/articles/communication/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="bouton_ajout" type="submit"> Ecrire un article
+      </a>
+      </div>
+      <div id="listearticles" >
+        [% FOREACH doublearticle = liste_articles %]
+        <a class="row" id="article"style="height:50px" href="[% uri_base %]/articles/afficher/[% doublearticle.0.article_id %]">
+	        <div class="col-4" id="nom">
+          [% IF doublearticle.0.article_nom %]
+	          [% doublearticle.0.article_nom %]
+          [% ELSE %]
+            Titre manquant
+          [% END %]
+	        </div>
+
+          <!-- liste des auteurs qui ont écris ces articles -->
+	 
+         <div class="col-7" id="nom"> [% IF doublearticle.1.size != 0 %]
+             [% FOREACH auteur = doublearticle.1 %] [% auteur.utilisateur_nom %] [% auteur.utilisateur_prenom %],[% END %]
+            [% ELSE %] Auteurs non cités [% END %]
+          </div>
+        </a>  
+        [% END %]  
+          
+      </div>
+      </div>
+    </div>
+
+</reste>
+ 

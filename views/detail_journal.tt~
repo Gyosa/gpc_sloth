@@ -1,0 +1,39 @@
+<div id="reste" class="col-9">
+	
+
+<link rel="stylesheet" href="http://localhost/sloth/css/style_detail_journal.css"/>
+
+<reste class="col-10">
+  
+  <h2> [% journal.journal_nom %] </h2>
+  <div class="row">
+    <a class="col-7" id="lienjournal" href="[% journal.journal_site_web %]"> [% journal.journal_site_web %] </a>
+    <div class="col-5" id="titrelistearticle"> Articles du centre dans cette revue </div>
+  </div>
+  <div class="row">
+    <div class="col-4" id="descriptionjournal"> [% journal.journal_description %]  </div>
+    <div class="col-3"> </div>
+   <!-- Il nous faudra un foreach article where le nom du journal c'est celui de la page où on est -->
+   <div id="listearticles">
+     <a class="row" id="article">
+       <div id="nom"> Nom de l'article 1 </div>
+       <div class="col-2"></div>
+       <div id="date"> Date de parution </div> 
+     </a>
+     <a class="row" id="article">
+       <div id="nom"> Nom de l'article 2 </div>
+       <div class="col-2"></div>
+       <div id="date"> Date de parution </div>
+     </a>
+     <a class="row" id="article">
+       <div id="nom"> Nom de l'article 3 </div>
+       <div class="col-2"></div>
+       <div id="date"> Date de parution </div> 
+     </a>
+   </div>
+  </div>
+  
+  
+   
+  <div class="col-5" id="consignes"> Consignes : <br> [% journal.journal_consignes %] </div> 
+</reste> 

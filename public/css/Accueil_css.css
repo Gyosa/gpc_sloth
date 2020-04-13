@@ -1,0 +1,53 @@
+body{
+	background-color: #F0F2D6;
+	color:#36622B;
+	background-image: url("images.png")
+
+}
+
+
+button{
+
+	color:#36622B;
+	margin-left:15%;
+	margin-top: 10%;
+
+}
+
+h2{
+	text-align: center;
+
+
+
+
+
+}
+
+#texte{
+	text-align: center;
+	margin-top: 12%;
+
+
+}
+
+
+
+#connect{
+	padding:auto;
+	margin-left: -2%;
+	margin-top: 3%;
+}
+
+
+
+
+
+
+
+.row{
+
+	margin-top: 50vh;
+	transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+
+}
+

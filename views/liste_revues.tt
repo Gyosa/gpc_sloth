@@ -1,0 +1,110 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<!-- CSS liste -->
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+<style> #myUL {
+    list-style-type: none;
+    width:100%;
+  }
+</style>
+<reste class="col-10" id="reste">
+ <!-- Titre et bouton ajouter-->
+  <div class="col-10">
+    <h2> Revues scientifiques </h2>
+    <a href="[% uri_base %]/revues/creer" class="btn btn-success btn-circle btn-lg" style="margin-top:1%; margin-bottom:1%" role="button" title="Lien" id="boutonajout">
+      Ajouter une revue
+    </a>
+  </div>
+
+  <!-- Filtre et bouton radio -->
+  <div class="row">
+    <div class="col-5">
+      <div  id="petittexte"> Rechercher dans le titre </div>
+      <input class="form-control" id="myInput" onkeyup="myFunction()" type="text" placeholder="Search..">
+    </div>
+    <div class="col-7">
+      <div id="petittexte">
+        Options de recherche
+      </div>
+      <div>
+        <input type="checkbox" id="chk" name="chk" onclick="hs()">
+	      <label for="horsserie"> Afficher les revues publiant bientôt un hors-série </label>
+      </div>
+    
+    </div>
+    <div class="col-12" id="petittexte"> Cliquer sur une revue pour avoir plus d'informations </div>
+ <ul id="myUL">   
+
+    [% FOREACH truc = liste_revues %] <!-- liste_revue contient 10 objets : Une revue, la presence d'un hors série ou non, puis le nombre d'article dans chaque
+    statut pour chaque revue -->
+   
+<li> <a class="row" style="height:50px;" id="revue" href="[% uri_base %]/revues/afficher/[% truc.0.revue_id | uri%]" >
+      
+      <div class="col-6" id="nom"> [% truc.0.revue_nom | html %] </div>
+      <div class="col-6">
+        <div id="commentaire">
+          Nombre articles en rédaction : [% truc.9 %]
+        </div >        
+        <div id="commentaire">
+          Nombre articles en attente d'acceptation : [% truc.4 %]
+        </div >        
+      </div>
+    </a>   
+    [% IF truc.1==0 %] 
+    <span style="display:none">oui</span> <!-- N'apparait pas sur la page, c'est une astuce pour le filtre javascript -->
+    [% ELSE %]
+    <span></span>
+    [% END %]
+</li> 
+
+ [% END %]
+    
+</ul>
+ <script>
+    function myFunction() { //filtre rechercher 
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) { //on parcourt la liste des revues 
+		    a = li[i].getElementsByTagName("a")[0];
+		    txtValue = a.textContent || a.innerText;
+		    if (txtValue.toUpperCase().indexOf(filter) > -1) { //on compare l'input avec les infos de la revue 
+          li[i].style.display = "";
+        } 
+        else {
+          li[i].style.display = "none";
+        }
+      }
+    } 
+ </script>
+
+ <script>
+    function hs(){ //Bouton présence d'un hors série 
+      var checkmoica, ul, li, i, sp, enfin;
+      checkmoica = document.getElementById("chk");
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName("li");
+      if (checkmoica.checked == 1){
+        for (i=0;i<li.length;i++){ 
+          sp = li[i].getElementsByTagName("span")[0]; //la seule balise span est celle qui est créée uniquement si la revue contient un hors série 
+          enfin = sp.textContent || sp.innerText;
+		      if (enfin!="")
+          {
+            li[i].style.display="none";            
+          }
+		    }
+		  }  
+     else
+		 {
+		    for (i=0;i<li.length;i++){ 
+		      li[i].style.display="";
+		    }
+			}
+		}
+ </script>
+ 
+</reste>
+
+<!-- voir documentation sur <http://datatables.net/manual/index> -->

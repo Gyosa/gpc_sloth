@@ -1,0 +1,75 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+
+<reste class="col-10" id="reste">
+
+<!-- Titre, boutons modifier et supprimer -->
+ <div class="row"> 
+   <div class="col-8"> 
+      <h2> [% hors_serie.hors_serie_nom %] pour [% hors_serie_revue.revue_nom %] </h2>
+   </div>
+   <div class="col-4">
+    <a href="[% uri_base %]/[%revue_id%]/hors_serie/modifier/[% hors_serie.hors_serie_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien"> 
+      Modifier
+    </a>
+    <a href="[% uri_base %]/[%revue_id%]/hors_serie/supprimer/[% hors_serie.hors_serie_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien"  type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce hors-série ?')"> 
+      Supprimer
+    </a>
+    </div>
+  </div>
+<!-- Details du hors série -->
+<div class="row">
+    <div class="col-5" id="titrelistearticle">
+          [% IF hors_serie.hors_serie_consignes %]
+             <a href="[% hors_serie.hors_serie_consignes %]" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="bouton_ajout" type="submit"> 
+              Consignes
+             </a>
+          [% ELSE %] Consignes manquantes [% END %]
+    </div>
+    <div class="col-7" id="titrelistearticle" style="margin-bottom:20px">
+          [% USE date(format = '%A %d %B %Y', locale = 'fr_FR') %]
+          Date limite de soumission : 
+          [% IF hors_serie.hors_serie_date_limite_soumission %]
+          [% date.format(hors_serie.hors_serie_date_limite_soumission) %]
+          [% ELSE %]
+          non renseigné
+          [% END %]
+          <br>
+          Date de publication : 
+          [% IF hors_serie.hors_serie_date_publication %]
+          [% date.format(hors_serie.hors_serie_date_publication) %]
+          [% ELSE %]
+          non renseigné
+          [% END %]
+    </div>
+</div>
+<!-- Liste des articles -->
+    <div class="col-10" style="margin-top:5%">
+      <div id="titrelistearticle" style="justify-content:space-between">
+        Articles du centre dans ce hors-série
+       <a href="[% uri_base %]/articles/publication/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="bouton_ajout" type="submit"> Ecrire un article
+      </a>
+      </div>
+      <div id="listearticles" >
+        [% FOREACH doublearticle = liste_articles %] <!-- liste_articles est un objet qui contient la liste des articles, et pour chaque article, la liste des auteurs correspondants -->
+        <a class="row" id="article"style="height:50px" href="[% uri_base %]/articles/afficher/[% doublearticle.0.article_id %]">
+	        <div class="col-4" id="nom">
+          [% IF doublearticle.0.article_nom %]
+	          [% doublearticle.0.article_nom %]
+          [% ELSE %]
+            Titre manquant
+          [% END %]
+	        </div>
+	 
+         <div class="col-7" id="nom"> [% IF doublearticle.1.size != 0 %]
+             [% FOREACH auteur = doublearticle.1 %] [% auteur.utilisateur_nom %] [% auteur.utilisateur_prenom %],[% END %]
+            [% ELSE %] Auteurs non cités [% END %]
+          </div>
+        </a>  
+        [% END %]  
+          
+      </div>
+      </div>
+    </div>
+</reste>

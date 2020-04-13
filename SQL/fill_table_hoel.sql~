@@ -1,0 +1,95 @@
+insert into utilisateur ( utilisateur_auth, utilisateur_nom,utilisateur_prenom) 
+	values
+	('chamon', 'Hamon','Célestin'),
+	('mschalle', 'Schaller','Mathieu'),
+	('hmarjoux', 'Marjoux','Hoel'),
+	('clescure', 'Lescure','Camille'),
+	('epourrat', 'Pourrat','Eliott'); 
+
+insert into groupe (groupe_id,groupe_nom,groupe_description) 
+	values 
+	('ninja','Les ninjas','Goupe d étudiants agiles, si rapides et si malicieux !'),
+	('mac','Les utilisateurs de Mac','Étudiants utilisant des Macbook'),
+	('frisees','Les frisées','Confrerie des amoureux de la bouclette');
+
+insert into est_membre (est_membre_groupe_id, est_membre_utilisateur_id)
+	values 
+	('ninja','mschalle'),
+	('ninja','chamon'),
+	('ninja','hmarjoux'),
+	('ninja','clescure'),
+	('ninja','epourrat'),
+	('mac','mschalle'),
+	('mac','epourrat'),
+	('frisees','chamon'),
+	('frisees','epourrat');
+
+
+insert into conference (conference_id,conference_nom)
+	values 
+	('conf_iscram','Iscram');
+
+insert into conference (conference_id,conference_nom,conference_description)
+	values 
+	('VLDB','International Conference on Very Large Data Bases','The VLDB Conferences constitute one of the most eminent venues for the timely dissemination of research and development results in the field of database management.');
+
+insert into edition_conf (edition_conf_id, edition_conf_nom, edition_conf_description, edition_conf_conference_id,edition_conf_ville,edition_conf_pays)
+	values
+	('iscram2018','Iscram édition 2019','Édition 2019 de l&rsquo;Information Systems for Crisis Response and Management','conf_iscram','Albi','France');
+
+insert into edition_conf (edition_conf_id, edition_conf_nom, edition_conf_description, edition_conf_conference_id, edition_conf_ville,
+	edition_conf_pays, edition_conf_date_debut, edition_conf_date_fin, edition_conf_site, edition_conf_langue, edition_conf_date_limite_soumission)
+	values
+	('VLDB45','45th International Conference on Very Large Data Bases','The annual VLDB conference is a premier annual international forum for database researchers, vendors, practitioners, application developers, and users. PVLDB, established in 2008, is a scholarly journal for short and timely research papers, with a journal-style review and quality assurance process. PVLDB is distinguished by a monthly submission process with rapid reviews. Its issues are published regularly throughout the year. Your paper will appear in PVLDB soon after acceptance, and possibly in advance of the VLDB conference. All papers accepted in time will be published in PVLDB Vol. 12 and also presented at the VLDB 2019 conference.'
+	, 'VLDB', 'Los Angeles', 'États-Unis', '2019-08-26', '2019-08-30', 'http://vldb.org/2019', 'Anglais', '2019-05-07'),
+	('VLDB44','44th International Conference on Very Large Data Bases','The annual VLDB conference is a premier annual international forum for database researchers, vendors, practitioners, application developers, and users. PVLDB, established in 2008, is a scholarly journal for short and timely research papers, with a journal-style review and quality assurance process. PVLDB is distinguished by a monthly submission process with rapid reviews. Its issues are published regularly throughout the year. Your paper will appear in PVLDB soon after acceptance, and possibly in advance of the VLDB conference. All papers accepted in time will be published in PVLDB Vol. 11 and also presented at the VLDB 2019 conference.'
+	, 'VLDB', 'Rio de Janeiro', 'Brazil', '2018-08-27', '2018-08-31', 'http://vldb2018.lncc.br/', 'Anglais', '2018-05-09');
+
+insert into statut (statut_id, statut_nom)
+	values
+	('accepte','Papier accepté mais non publié'),
+	('online','Papier publié online'),
+	('publie','Papier publié papier'),
+	('refuse','Refusé, à re-travailler'),
+	('attente','Attente review suite à soumission'),
+	('redaction','Rédaction en cours avant soumission');
+
+
+insert into journal (journal_id,journal_nom,journal_description,journal_theme,journal_site_web,journal_consignes) 
+	values 
+	('EIS', 
+	'Enterprise information system',
+	'Enterprise Information Systems (EIS) is devoted to original research and novel applications in improving the functions of an enterprise business and engineering management processes,and the theoretical and managerial implications of the system integrations and implementations.',
+	'Industrial Engineering',
+	'https://www.tandfonline.com/toc/teis20/current',
+	'https://www.tandf.co.uk/journals/authors/teisauth.asp'),
+	('DSS',
+	'Decision Support Systems',
+	'The common thread of articles published in Decision Support Systems is their relevance to theoretical and technical issues in the support of enhanced decision making. The areas addressed may include foundations, functionality, interfaces, implementation, impacts, and evaluation of decision support systems.',
+	'Industrial Engineering',
+	'https://www.journals.elsevier.com/decision-support-systems/',
+	'https://www.elsevier.com/journals/decision-support-systems/0167-9236?generatepdf=true'),
+	('JIM',
+	'Journal of Intelligent Manufacturing',
+	'Published in eight issues per year, the Journal of Intelligent Manufacturing provides a unique international forum for developers of intelligent manufacturing systems. By publishing quality refereed papers on the application of artificial intelligence in manufacturing, the Journal provides a vital link between the research community and practitioners in industry.',
+	'Manufacturing',
+	'https://www.springer.com/business+%26+management/operations+research/journal/10845',
+	'https://www.springer.com/business+%26+management/operations+research/journal/10845');
+
+insert into hors_serie (hors_serie_id,hors_serie_journal_id, hors_serie_consignes, hors_serie_date_limite_soumission)
+	values
+	('HS-EIS-1',
+	 'EIS',
+	 'Que des articles sur l&rsquo;intelligence artificielle',
+	 '2019-09-09');
+
+
+insert into article ()
+	values ();
+
+insert into participation ()
+	values ();
+
+insert into fichier ()
+	values ();
+

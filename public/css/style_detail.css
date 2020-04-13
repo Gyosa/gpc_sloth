@@ -1,0 +1,220 @@
+@font-face {
+	font-family: 'patuaone';
+	src: url('polices/PatuaOne-Regular.ttf')format('truetype');
+}
+
+#lienjournal{
+    font-size:18px;
+    text-decoration:none;
+    color:white;
+}
+
+#descriptionjournal{
+    margin-top:2%;
+    text-align:justify;
+    margin-bottom:5%;
+}
+
+#listearticles{
+    margin-bottom:30%;
+}
+#titrelistearticle, #horsserie, #titrelisteedition, #listeauteur, #ancienneversion{
+    font-size:20px;
+    color:#36622B;
+}
+
+#article{
+    margin-top:10px;
+    height:30px;
+    width:900px;
+    background-color:white;
+    color:#36622B;
+    border-style:solid;
+    border-color:#36622B;
+    border-width:1px;
+}
+
+#merci{
+    color:#36622B;
+    margin-left:7%;
+}
+
+#hs{
+    justify-content:space-between;  
+    margin-top:10px;
+          height:30px;
+          width:400px;
+          background-color:white;
+          color:#36622B;
+          border-style:solid;
+          border-color:#36622B;
+          border-width:1px;"
+}
+
+#editconference{
+    margin-top:10px;
+    height:40px;
+    width:300px;
+    background-color:white;
+    color:#36622B;
+    border-style:solid;
+    border-color:#36622B;
+    border-width:1px;
+}
+
+h3{
+    color:#36622B;
+}
+
+#btn_ajout_edition, #btn_import{ 
+    width:160px;
+    font-size:14px;
+    padding:2%;
+}
+
+#article:hover, #hs:hover, .version:hover, #editconference:hover{
+    background-color:#b5c99b;
+    text-decoration:none;
+}
+#btn_ajout_article, #btn_ajout_hs
+{
+    width:100px;
+    font-size:14px;
+    margin-bottom:5%;
+    padding:2%;
+}
+#btn_modif, #btn_suppr
+{
+    font-size:14px;
+    width:100px;
+    margin-right:3%;
+    color:white;
+}
+
+#reste{
+    margin-top:4%;
+}
+
+ul{
+
+    list-style-type: none;
+}
+
+#liste:hover{
+
+    text-decoration: none;
+    background-color: #36622B;
+    color: #fff;
+
+}
+
+
+#liste{
+    color: #36622B;
+
+}
+
+li{
+
+    text-align: center;
+    color: #36622B;
+    text-align: center;
+    font-weight:bold;
+
+}
+
+#container{
+
+    text-align: center;
+}
+
+#revue
+{
+
+    color:#36622B;
+    background-color:white;
+    height:50px;
+    width:1000px;
+    margin-top:2%;
+    margin-left:10px;
+    border-top-width:2px;
+    border-top-style:solid;
+    border-top-color:#36622B;
+    border-bottom-width:2px;
+    border-bottom-style:solid;
+    border-bottom-color:#36622B;
+}
+
+#revue:hover{
+    background-color:#b5c99b;
+}
+
+
+#nom:hover{
+
+    cursor: pointer;
+}
+
+#nom{
+
+    margin-top: 1%;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+
+.try:hover{
+    background-color: #36622B;
+    color: #fff;
+
+
+
+}
+
+#date_archivage{
+
+    margin-bottom: 5%;
+}
+
+
+#twoside{
+
+    margin-top: 5%;
+}
+
+#valider{
+
+    margin-top:5%;
+
+}
+
+.file{
+
+    text-decoration: none;
+    color: #36622B;
+
+
+}
+
+
+#revue_choice{
+    width: 50%;
+}
+
+.comment{
+
+    color: #000;
+}
+
+
+.fichier_li{
+
+
+    margin-top: 2%;
+}

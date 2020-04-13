@@ -1,0 +1,94 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_detail.css"/>
+<reste class="col-10" id="reste">
+  <div class="row">
+    <div class="col-8">
+      <h2> [% revue.revue_nom %] </h2>
+    </div>
+    <div class="col-4">
+      <a href="[% uri_base %]/revues/modifier/[% revue.revue_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_modif"> 
+        Modifier
+      </a>
+      <a href="[% uri_base %]/revues/supprimer/[% revue.revue_id %]" style="margin-top:25px" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_modif" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette revue ?')">
+        Supprimer
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-5">
+      <div>
+        [% IF revue.revue_site_web %] <a class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout" href="[% revue.revue_site_web %]">
+          Site Web 
+    		  </a> [% ELSE %] Site web manquant [% END %]
+      </div>
+     
+      <div id="descriptionjournal">
+        [% revue.revue_description %]
+      </div>
+      <div class="col-5">
+        [% IF revue.revue_consignes %]<a class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="boutonajout" href="[% revue.revue_consignes %]">
+          Consignes
+        </a> [% ELSE %] Consignes manquantes [% END %] 
+      </div>
+    </div>
+    
+    <div class="col-1"></div>
+    <div class="col-6">
+      <div id="titrelistearticle">
+        <!-- Gestion des hors séries : ajout + liste des HS -->
+        Hors-séries à prévoir pour cette revue :
+        <a href="[% uri_base %]/[% revue.revue_id %]/hors_serie/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_ajout_edition">
+	          Ajouter un hors-série
+        </a>
+      </div>
+      <div id="listehss">
+        [% IF liste_hs_exists == 1 %]
+    
+        [% FOREACH hs = liste_hs %]
+        <a class="row col-6" id="hs" href="[% uri_base %]/[% revue.revue_id %]/hors_serie/afficher/[% hs.hors_serie_id %]">
+	        <div id="nom"> [% hs.hors_serie_nom %]</div>
+         </a>
+        [% END %]
+        [% ELSE %]
+        Aucun hors-série prévu pour le moment
+        [% END %] 
+      </div>
+    </div>
+  </div>
+
+    
+<!-- Liste des articles publiés dans cette revue -->
+  
+      <div class="col-10" id="titrelistearticle">
+        Articles du centre dans cette revue 
+          <a href="[% uri_base %]/articles/publication/creer" class="btn btn-success btn-circle btn-lg" role="button" title="Lien" id="btn_ajout_edition">
+	        Ajouter un article
+          </a>
+      </div>
+    
+      <div id="listearticles" style="margin-bottom:10%">
+        [% FOREACH doublearticle = liste_articles %]
+        <a class="row" id="article" href="[% uri_base %]/articles/afficher/[% doublearticle.0.article_id %]" style="justify-content:space-between">
+	        <div id="nom">
+          [% IF doublearticle.0.article_nom %]
+	          [% doublearticle.0.article_nom %]
+          [% ELSE %]
+            Titre manquant
+          [% END %]
+	        </div>
+	       <div class="col-1"></div>
+         <div id="nom"> [% IF doublearticle.1 %]
+             [% FOREACH auteur = doublearticle.1 %] [% auteur.utilisateur_nom %] [% auteur.utilisateur_prenom %],[% END %]
+            [% ELSE %] Auteurs non attitré [% END %]</div>
+        </a>  
+        [% END %]  
+      </div>
+     
+
+    </div>
+
+  </div>
+
+</reste> 

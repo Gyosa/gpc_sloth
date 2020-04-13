@@ -1,0 +1,28 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<link rel="stylesheet" href="[% uri_base %]/css/style_liste.css"/>
+
+
+
+
+<reste class="col-10">
+
+	<div class="col-10"> <h2> Mes fichiers</h2></div>
+	<div class="col-4"> <a href="[% uri_base %]/fichiers/upload"><button type="button" class="btn btn-success" href="">Ajouter un fichier</button> </a> </div>
+
+	[% FOREACH file = liste_file %]
+
+	<a class="row" id="revue" href="[% uri_base %]/fichiers/lire/[%file.fichier_id%]" >
+
+		<div class="col-6" id = "data"> [% data | html %] </div> 
+
+
+		<div class="col-6" id="path"> [% path | html %]   </div >
+		<div class="col-4" id="files_id">id du fichier : [% file.fichier_id %] </div>
+		<div class="col-4" id="files_nom">[% file.fichier_nom %] </div>
+		<div class="col-4" id="files_data">Relié à l'article : [% file.fichier_article_id %] </div>
+		
+
+	</a>
+	[% END %]
+</reste>

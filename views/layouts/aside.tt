@@ -1,0 +1,7 @@
+[%# -*- mode: html; coding: utf-8; -*- %]
+
+<div class=sidenav>
+    [% FOR item IN menu %]
+    <a id='cote' href='[% uri_base %][% item.route %]'> [% item.texte %] </a> <br>
+    [% END %]
+</div>

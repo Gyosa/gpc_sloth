@@ -1,0 +1,95 @@
+
+header{
+    background-color:#36622B;
+    color:white;
+    text-align:center;
+    vertical-align:middle;
+}
+
+
+h2{
+
+    font-size:40px;
+    color:#36622B;
+    font-family: "patuaone";
+    margin-bottom:2%;
+}
+
+#reste{
+    margin-left:220px;
+}
+
+#user{
+    margin-top:1.5%;
+    font-family: "patuaone";
+}
+
+#logo{
+    margin-top:0.5%;}
+
+#SLOTH{
+	    font-family: "patuaone";
+}
+@media screen and (max-width: 900px){
+    #sidenav{
+        display:none;
+    }
+    #reste{
+        margin-left:20px;
+    }
+}
+
+@media screen and (max-width: 1100px){
+    #cote{
+        font-size:14px;
+    }
+}
+#sidenav{
+    background-color:#729D39;
+    height:100%;
+    width:200px;
+    position:fixed; 
+    font-size:16px;
+    margin-top:90px;
+}
+
+
+#cote{
+    color:white;
+    text-decoration:none;
+    line-height:2.5em;
+    width: auto;
+    font-family : "patuaone";
+    margin-left:3%;
+    margin-top:10px;
+}
+
+#foot{
+    position:fixed;
+    bottom:0;
+    margin-left:30px;
+    color:white;
+    font-family:"patuaone";
+    text-decoration:none;  
+}
+
+#cote:hover{
+
+	text-decoration:none;
+	background-color:#F0F2D6;
+    color:#36622B;
+ 	border-radius: 8%;
+
+}
+@font-face{
+	font-family: "patuaone";
+	src:url("../font/PatuaOne-Regular.ttf")format('truetype');
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+[%# -*- coding: utf-8; mode: html; -*- ~%]
+<form class="enligne" method="get" action="[% action %]">
+  <button type="submit" class="btn btn-default">
+    [%- IF glyphicon.defined -%]
+    <span class="glyphicon glyphicon-[% glyphicon | uri %]"></span>
+    [% END -%]
+    [% texte | html -%]
+  </button>
+</form>

@@ -1,0 +1,17 @@
+insert into groupe (groupe_nom,groupe_description) 
+	values 
+	('Les ninjas','Goupe d étudiants agiles, si rapides et si malicieux !'),
+	('Les utilisateurs de Mac','Étudiants utilisant des Macbook'),
+	('Les frisées','Confrerie des amoureux de la bouclette');
+
+insert into est_membre (est_membre_groupe_id, est_membre_utilisateur_id)
+	values 
+	('1','1'),
+	('1','2'),
+	('1','3'),
+	('1','4'),
+	('1','5'),
+	('2','2'),
+	('2','5'),
+	('3','1'),
+	('3','5');
