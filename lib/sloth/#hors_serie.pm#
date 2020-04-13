@@ -1,0 +1,212 @@
+package sloth::hors_series;
+use strict;
+use warnings;
+# ce module apparatient à l'application 'sloth';
+use Dancer2 appname => 'sloth';
+use Dancer2::Plugin::DBIC;      # accès aux classes DBI (mot-clé: schema)
+# pour de le debug
+use Data::Dumper;
+use constant DEBUG => sloth::DEBUG;
+
+# toutes les routes de ce module commencent implicitement par "/hors_series"
+prefix "/hors_serie";
+
+
+# ---------- route GET /hors_series/afficher : afficher infos journal 
+get '/afficher/:hors_serie_id' => sub {
+  my $hs_id = param('hors_serie_id');
+  my $hors_serie = schema->resultset('HorsSerie')->find($hs_id);
+  if (not defined $hors_serie or $hors_serie eq "") {
+    Messages::danger("ce journal n'existe pas (numero = $hs_id)");
+    return vue_liste_hors_serie();
+  };
+  var 'hors_serie' => $hors_serie;
+  var 'hs_id' => $hs_id;
+  return vue_detail_hors_serie();
+};
+
+
+# # ---------- route GET /hors_serie/formulaire : afficher formulaire hors_serie 
+# get '/creer' => sub {
+#   Messages::developpement("Création d'un nouvel hors_serie") if DEBUG;
+#   return vue_creer_hors_serie();
+# };
+
+
+# # ---------- route POST /hors_serie/formualire : réaliser création hors_serie,
+# post '/creer' => sub {
+#   Messages::developpement("Création d'un nouvel hors_serie") if DEBUG;
+
+#   # ===== Il faut d'abord valider les données du formulaire
+  
+#   # --- le profil de validation est une methode que nous avons ajoutee
+#   #     a la classe DBIx::Class correspondant à la table a modifier
+#   my $profil = schema->class('HorsSerie')->dfv_profil_creation;
+
+
+#   # --- obtenir les paramètres
+#   my $donnees_formulaire = request->params;
+  
+#   # --- check valide l'ensemble des donnees passees dans la query
+#   #     en fonction des contraintes exprimées dans le profil de validation.
+#   my $resultats = Data::FormValidator->check( $donnees_formulaire, $profil );
+#   Messages::developpement("Résultat validation:",
+# 			  Dumper($resultats)) if DEBUG;
+
+#   # --- L'objet retourne par check a des methodes generales
+#   #     qui indiquent s'il y a eu des erreurs ou des donnees manquantes
+#   if ( $resultats->has_invalid or $resultats->has_missing ) {
+#       # ----- Si des erreurs sont détectées par la validation:
+#       if($resultats->has_missing){Messages::danger("has missing");}
+#       if($resultats->has_invalid){Messages::danger("has invalid");}
+#     Messages::danger("Il y a des erreurs");
+
+#     # --- après erreur, on revient en modification sur les donnees saisies
+#     $donnees_formulaire->{hors_serie_id} = 0;
+#     var 'hors_serie' =>  schema->resultset('HorsSerie')->new($donnees_formulaire);
+#     var 'msgs' => $resultats->msgs;
+#     return vue_creer_hors_serie();
+
+#   } 
+
+#   warn Dumper($resultats);
+  
+#   # ----- Si aucune erreur n'est détectée par la validation:
+#   # on doit créer le nouveau journal
+#   my $new_hors_serie = schema->resultset('HorsSerie')->create_from_fv($resultats);
+#   if (defined $new_hors_serie) {
+#     Messages::succes("HorsSerie (numero=". $new_hors_serie->hors_serie_id() . ") ajouté");
+#     var 'critere_hors_serie_nom' => $new_hors_serie->hors_serie_nom;
+#     var 'critere_hors_serie_revue_id'=> $new_hors_serie->hors_serie_description;
+#     var 'critere_hors_serie_date'=> $new_hors_serie->hors_serie_date;
+#     var 'critere_hors_serie_consignes'=> $new_hors_serie->hors_serie_consignes;
+#   } else {
+#     Messages::danger("Création du nouvel hors serie impossible");
+#   }
+#   return vue_liste_hors_serie();
+
+# };
+
+### modifier les variables pour correspondre a la DBB### 
+# ---------- route GET /journal/modifier : afficher formulaire modification journal
+# get '/modifier/:hors_serie_id' => sub {
+#   my $hors_serie_id = param('hors_serie_id');
+#   my $hors_serie = schema->resultset('HorsSerie')->find($hors_serie_id);
+#   if (not defined $hors_serie) {
+#     Messages::danger("cette hors_serie n'existe pas (numero = $hors_serie_id)");
+#     return vue_liste_hors_serie();
+#   }
+#   var 'hors_serie' => $hors_serie;
+#   return vue_formulaire_hors_serie();
+# };
+
+
+### est appélé quand in utlisation les icon jQuerry (desactivés voir gestcli) ###
+# # ---------- route POST /journal/modifier : réaliser modification journal,
+# post '/modifier/:journal_id' => sub {
+#   my $journal_id = param('journal_id');
+#   if (not defined $journal_id or not $journal_id =~ m/^\d+$/) {
+#     Messages::danger("Invalid parameter 'journal_id'!");
+#     return vue_liste_journal();
+#   }
+#   # on recherche ce journal
+#   my $journal = schema->resultset('Journal')->find($journal_id);
+#   if (not defined $journal) {
+#     Messages::danger("Cet journal n'existe pas (numero = $journal_id)");
+#     return vue_liste_journal();
+#   }
+
+#   Messages::developpement("journal_id = $journal_id") if DEBUG;
+
+#   # ===== Il faut d'abord valider les données du formulaire
+#   # --- le profil de validation est une methode que nous avons ajoutee
+#   #     a la classe DBIx::Class correspondant à la table a modifier
+#   my $profil = schema->class('Journal')->dfv_profil_creation;
+
+#   my $donnees_formulaire = request->params;   # obtenir les paramètres
+#   # --- check valide l'ensemble des donnees passees dans la query
+#   #     en fonction des contraintes exprimées dans le profil de validation.
+#   my $resultats = Data::FormValidator->check( $donnees_formulaire, $profil );
+#   Messages::developpement("Résultat validation:",
+# 			  Dumper($resultats)) if DEBUG;
+
+#   # --- L'objet retourne par check a des methodes generales
+#   #     qui indiquent s'il y a eu des erreurs ou des donnees manquantes
+#   if ( $resultats->has_invalid or $resultats->has_missing ) {
+#       # ----- Si des erreurs sont détectées par la validation:
+     
+#     Messages::danger("Il y a des erreurs");
+#     # Messages::danger("Nombre de valeurs manquantes: " . Dumper($resultats->has_missing));
+#     # Messages::danger("Nombre de valeurs invalides " . Dumper($resultats->has_invalid));
+#     # Messages::danger("messages " . Dumper($resultats->msgs));
+
+#     # --- après erreur, on revient en modification sur les donnees saisies
+#     $donnees_formulaire->{journal_id} = $journal->journal_id;
+#     var 'journal' => schema->resultset('Journal')->new($donnees_formulaire);
+#     var 'msgs' => $resultats->msgs;
+#     return vue_formulaire_journal();
+#   }
+
+#   # --- Aucune erreur n'est détectée par la validation, on peut modifier
+#   # --- on met à jour le journal via la methode update_from_fv
+#   #     (fournie par le composant DBIx::Class::FromValidators)
+#   $journal = $journal->update_from_fv($resultats);
+#   if (not defined $journal) {
+#     Messages::danger("Modification impossible!");
+#     return vue_liste_journal();
+#   }
+#   my $cli_nom = $journal->cli_nom;
+#   Messages::succes("Journal modifié (nom: $cli_nom, numéro: $journal_id)");
+#   var 'critere_cli_nom' => $cli_nom;
+#   var 'critere_cli_cp' => $journal->cli_cp;
+#   return vue_liste_journal();
+# };
+
+
+# ---------- route GET /journal/supprimer : afficher formulaire modification journal
+# get '/supprimer/:journal_id' => sub {
+#   my $journal_id = param('journal_id');
+#   my $journal = schema->resultset('Journal')->find($journal_id);
+#   if (not defined $journal) {
+#     Messages::danger("Ce journal n'existe pas (numéro = $journal_id)");
+#     return vue_liste_journal();
+#   }
+#   var 'journal' => $journal;
+#   return vue_formulaire_suppression();
+# };
+
+# post '/supprimer/:journal_id' => sub {
+#   my $journal_id = param('journal_id');
+#   my $journal = schema->resultset('Journal')->find($journal_id);
+#   if (defined $journal) {
+#     $journal->delete();
+#     Messages::succes("Journal supprimé");
+#   } else {
+#     Messages::danger("Ce journal n'existe pas (numéro = $journal_id)");
+#   }
+#   return vue_liste_journal();
+# };
+
+
+#------------------------------------------------------------
+# les vues côté "hors_serie"
+#------------------------------------------------------------
+
+sub vue_detail_hors_serie{
+  my $hors_serie = var 'hors_serie';
+  template 'detail_hs', {
+    hors_serie => $hors_serie,
+  }
+}
+
+# sub vue_creer_hors_serie {
+#     template 'creer_hors_serie', {
+#     };
+# }
+
+true;
+
+__END__
+
+
+## comprehension fin

@@ -1,0 +1,79 @@
+package sloth::fichiers;
+use strict;
+use warnings;
+# ce module apparatient à l'application 'sloth';
+use Dancer2 appname => 'sloth';
+use Dancer2::Plugin::DBIC;      # accès aux classes DBI (mot-clé: schema)
+# pour de le debug
+use Data::Dumper;
+use constant DEBUG => sloth::DEBUG;
+
+# toutes les routes de ce module commencent implicitement par "/groupe"
+prefix "/fichiers";
+
+# ---------- route GET /fichier/upload : telecharger un fichier !
+get '/upload' => sub {
+    Messages::developpement("téléchargement d'un fichier") if DEBUG;
+
+    return vue_upload_file();
+};
+
+# ---------- route POST /fichier/upload :
+post '/upload' => sub {
+    my $data = request->upload('file');
+ 
+    my $dir = path(config->{appdir}, 'uploads');
+    mkdir $dir if not -e $dir;
+ 
+    my $path = path($dir, $data->gpcsloth);
+    if (-e $path) {
+        return "'$path' already exists";
+    }
+    $data->copy_to($path);
+
+    var 'path' => $path;
+    var 'data' => $data;
+    
+    return vue_upload_liste_file();
+};
+
+get '/liste' => sub {
+
+    return vue_liste_file();
+};
+
+#------------------------------------------------------------
+# les vues côté "utilisateur"
+#------------------------------------------------------------
+
+sub vue_upload_file() {
+    template 'formulaire_upload';
+}
+
+sub vue_upload_liste_file() {
+    Messages::succes("file upload reussite");
+
+    my $data = var 'data';
+    my $path = var 'path';
+
+    template 'liste_file', {
+	data => $data,
+	path => $path,
+    }
+}
+
+sub vue_liste_file() {
+
+    my @liste_files = schema->resultset('Fichier')->all;
+
+    template 'liste_file', {
+	liste_file => \@liste_files,
+    }
+}
+
+# fin du package (la compilation s'est bien passé)
+true;
+
+__END__
+
+    
